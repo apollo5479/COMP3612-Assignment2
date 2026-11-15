@@ -1,28 +1,23 @@
 import { getProducts } from "./data.js";
+import { toastTimedMessage, ratingToStars, buildProductCard} from "./helpers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
 
     console.log(products);
 
-    //openHomePage();
-    hideContainersButOne(document.getElementById("single-product"));
-    closeAboutDialog();
+    openHomePage();
+    handleNavigation();
+    handleAboutDialog();
 
     buildProductCard(products[0]);
 });
 
 function hideContainersButOne(containerToShow) {
-    const homeContainer = document.getElementById("home");
-    const categoryContainer = document.getElementById("category");
-    const browseContainer = document.getElementById("browse");
-    const singleProductContainer = document.getElementById("single-product");
-    const cartContainer = document.getElementById("cart");
-    homeContainer.style.display = "none";
-    categoryContainer.style.display = "none";
-    browseContainer.style.display = "none";
-    singleProductContainer.style.display = "none";
-    cartContainer.style.display = "none";
+    const containers = document.querySelectorAll("article");
+    for (let container of containers) {
+        container.style.display = "none";
+    }
 
     containerToShow.style.display = "block";
 }
@@ -31,53 +26,34 @@ function openHomePage() {
     hideContainersButOne(document.getElementById("home"));
 }
 
-function openAboutDialog() {
+
+function handleNavigation() {
+    document.querySelector("body").addEventListener("click", (e) => {
+        let link;
+        if (e.target.classList.contains("nav-link")) {
+            link = e.target;
+        } else if (e.target.parentNode.classList.contains("nav-link")) {
+            link = e.target.parentNode;
+        } else {
+            return;
+        }
+
+        e.preventDefault();
+        const id = link.getAttribute("href");
+        hideContainersButOne(document.querySelector(id));
+    });
+}
+
+
+function handleAboutDialog() {
     const aboutDialog = document.getElementById("about");
-    aboutDialog.showModal();
-}
 
-function closeAboutDialog() {
-    const aboutDialog = document.getElementById("about");
-    aboutDialog.close();
-}
+    document.querySelector("#about-link").addEventListener("click", (e) => {
+        e.preventDefault();
+        aboutDialog.showModal();
+    });
 
-function toastTimedMessage(message) {
-    const toast = document.getElementById("toast-msg");
-    toast.textContent = message;
-    toast.style.display = "block";
-    setTimeout(() => {
-        toast.style.display = "none";
-    }, 3000);
-}
-
-function ratingToStars(rating) {
-    const stars = Math.floor(rating);
-    return stars;
-}
-
-function buildProductCard(product) {
-    const productDetails = document.querySelector("#product-details");
-    
-    //setting up the product card
-    const productThumbnail = document.createElement("img");
-    productThumbnail.src = product.thumbnail;
-    productThumbnail.alt = product.title; 
-    const productCard = document.createElement("div");
-    const productName = document.createElement("h2");
-    productName.textContent = product.title;
-    const productPrice = document.createElement("p");
-    productPrice.textContent = `$${product.price.toFixed(2)}`;
-
-    //not done yet, need to convert to star emojis
-    //const productRating = document.createElement("p");
-    //const stars = ratingToStars(product.rating);
-    //productRating.textContent = `Rating: ${stars} stars`;
-
-    //appending everything
-    productCard.appendChild(productName);
-    productCard.appendChild(productPrice);
-    productDetails.appendChild(productThumbnail); 
-    //productCard.appendChild(productRating); 
-
-    productDetails.appendChild(productCard);
+    document.querySelector("#about-close-button").addEventListener("click", () => {
+        aboutDialog.close();
+    });
 }
