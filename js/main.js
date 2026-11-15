@@ -26,7 +26,7 @@ function openHomePage() {
 }
 
 function openAboutDialog() {
-    const aboutDialog = document.getElementById("about-dialog");
+    const aboutDialog = document.getElementById("about");
     aboutDialog.showModal();
 }
 
