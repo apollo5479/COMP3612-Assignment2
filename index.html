@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMP 3612 Assignment 2</title>
+
+   <script src="https://cdn.tailwindcss.com"></script>
+   
+   <script src="js/main.js" type="module"></script>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo">TBD store logo</a>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#browse">Browse</a>
+            <a href="#category">Category</a>
+            <a href="#" id="about-link">About</a>
+            <a href="#cart">Cart (<span id="cart-count">0</span>)</a>
+        </nav>
+    </header>
+
+    
+    <main>
+
+        <article id="home">
+            <section id="hero">
+                <h1>TBD Hero</h1>
+                <p>TBD tagline</p>
+                <a href="#browse" class="button">Shop Now</a>
+            </section>
+            <section id="featured">
+                <h2>Featured Products</h2>
+                <ul id="featured-list"></ul>
+            </section>
+        </article>
+
+
+        <article id="category">
+            <section id="category-hero">
+                <h1>Categories</h1>
+            </section>
+            <ul id="category-list"></ul>
+        </article>
+
+        <article id="browse">
+            <h1>Browse</h1>
+            <section id="filter">
+                <h2>Filters</h2>
+
+            </section>
+            <section id="results">
+                <div id="current-filters"></div>
+                <label for="sort-select">Sort</label>
+                <select id="sort-select">
+                    <option value="name">Product Name</option>
+                    <option value="price">Price</option>
+                    <option value="category">Category</option>
+                </select>
+                <p id="no-matches">No products match your filters.</p>
+                <ul id="results-list"></ul>
+            </section>
+        </article>
+
+        <article id="singleproduct">
+            <nav id="breadcrumb"></nav>
+            <section id="product-details"></section>
+            <section id="product-tabs"></section>
+            <section id="related">
+                <h2>Related Products</h2>
+                <ul id="related-list"></ul>
+            </section>
+        </article>
+
+        <article id="cart">
+            <h1>Shopping Cart</h1>
+            <p id="cart-empty">Your cart is empty.</p>
+            <table id="cart-table">
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </table>
+
+            <section id="shipping">
+                <h2>Shipping</h2>
+                <label for="shipping-select">Method</label>
+                <select id="shipping-select">
+                    <option value="standard">Standard</option>
+                    <option value="express">Express</option>
+                    <option value="priority">Priority</option>
+                </select>
+                <label for="destination-select">Destination</label>
+                <select id="destination-select">
+                    <option value="canada">Canada</option>
+                    <option value="usa">United States</option>
+                    <option value="international">International</option>
+                </select>
+            </section>
+
+            <section id="summary">
+                <h2>Summary</h2>
+                <p>Merchandise<span id="summary-merchandise"></span></p>
+                <p>Shipping<span id="summary-shipping"></span></p>
+                <p>Tax<span id="summary-tax"></span></p>
+                <p>Total<span id="summary-total"></span></p>
+                <button id="checkout-button">Checkout</button>
+            </section>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>COMP 3612 Assignment 2</p>
+        <a href="https://github.com/apollo5479/COMP3612-Assignment2">GitHub Repo</a>
+        <p>&copy; Abdul Mohammad &amp; Paolo Deocareza</p>
+    </footer>
+
+
+    <dialog id="about" open>
+        <button id="about-close-button">X</button>
+        <h2>About</h2>
+        <p>TBD about section.</p>
+        <p>Tailwind.</p>
+        <p>Abdul Mohammad &amp; Paolo Deocareza</p>
+        <a href="https://github.com/apollo5479/COMP3612-Assignment2">GitHub Repo</a>
+    </dialog>
+
+    <div id="toast-msg"></div>
+
+</body>
+</html>
