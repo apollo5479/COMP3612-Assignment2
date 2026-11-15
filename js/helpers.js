@@ -1,5 +1,5 @@
 export function toastTimedMessage(message) {
-    const toast = document.getElementById("toast-msg");
+    const toast = document.querySelector("#toast-msg");
     toast.textContent = message;
     toast.style.display = "block";
     setTimeout(() => {

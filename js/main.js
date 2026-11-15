@@ -23,7 +23,7 @@ function hideContainersButOne(containerToShow) {
 }
 
 function openHomePage() {
-    hideContainersButOne(document.getElementById("home"));
+    hideContainersButOne(document.querySelector("#home"));
 }
 
 
@@ -46,7 +46,7 @@ function handleNavigation() {
 
 
 function handleAboutDialog() {
-    const aboutDialog = document.getElementById("about");
+    const aboutDialog = document.querySelector("#about");
 
     document.querySelector("#about-link").addEventListener("click", (e) => {
         e.preventDefault();
