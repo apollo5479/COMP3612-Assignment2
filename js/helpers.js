@@ -38,3 +38,14 @@ export function buildProductCard(product) {
 
     productDetails.appendChild(productCard);
 }
+
+export function formatPrice(price) {
+    return `$${price.toFixed(2)}`;
+}
+
+// formats the category like home-decoration into like Home Decoration. We only use this helper for text the user sees
+export function formatCategory(category) {
+    const parts = category.split("-"); // we get ["home", "decoration"]
+    const capitalized = parts.map(part => part.charAt(0).toUpperCase() + part.slice(1));
+    return capitalized.join(" "); // we get "Home Decoration"
+}
