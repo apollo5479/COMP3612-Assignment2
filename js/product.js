@@ -1,4 +1,4 @@
-import { formatPrice, formatCategory } from "./helpers.js";
+import { formatPrice, formatCategory, ratingToStars} from "./helpers.js";
 
 export function displaySingleProduct(product) {
 
@@ -12,6 +12,7 @@ export function displaySingleProduct(product) {
     image.alt = product.title;
 
     document.querySelector("#product-title").textContent = product.title;
+    document.querySelector("#product-rating").textContent = `${ratingToStars(product.rating)} ${product.rating.toFixed(1)}`;
     document.querySelector("#product-price").textContent = formatPrice(product.price);
     document.querySelector("#product-sku").textContent = product.sku;
     document.querySelector("#product-availability").textContent = product.availabilityStatus;

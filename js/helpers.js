@@ -8,7 +8,16 @@ export function toastTimedMessage(message) {
 }
 
 export function ratingToStars(rating) {
-    const stars = Math.floor(rating);
+    const fullStars = Math.round(rating);
+    let stars = "";
+
+    for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+            stars += "★";
+        } else {
+            stars += "☆";
+        }
+    }
     return stars;
 }
 
