@@ -16,6 +16,7 @@ export function displaySingleProduct(product) {
     document.querySelector("#product-price").textContent = formatPrice(product.price);
     document.querySelector("#product-sku").textContent = product.sku;
     document.querySelector("#product-availability").textContent = product.availabilityStatus;
+    displayTags(product.tags);
     document.querySelector("#product-description").textContent = product.description;
 
 }
@@ -42,4 +43,15 @@ export function handleImageDialog() {
             imgDialog.close();
         }
     });
+}
+
+function displayTags(tags) {
+    const tagList = document.querySelector("#product-tags");
+
+    for (let tag of tags) {
+        const item = document.createElement("li");
+        item.textContent = tag;
+        item.classList.add("items-center", "rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
+        tagList.appendChild(item);
+    }
 }
