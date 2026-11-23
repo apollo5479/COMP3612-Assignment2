@@ -1,4 +1,5 @@
-import { formatPrice, formatCategory, ratingToStars} from "./helpers.js";
+import { getProducts } from "./data.js";
+import { formatPrice, formatCategory, ratingToStars, toastTimedMessage} from "./helpers.js";
 
 export function displaySingleProduct(product) {
 
@@ -17,6 +18,8 @@ export function displaySingleProduct(product) {
     document.querySelector("#product-sku").textContent = product.sku;
     document.querySelector("#product-availability").textContent = product.availabilityStatus;
     displayTags(product.tags);
+    document.querySelector("#product-quantity").value = 1;
+    document.querySelector("#add-to-cart-button").dataset.id = product.id; // with this the button knows which product its for. adds the attribute data-id with products id as its vaule
     document.querySelector("#product-description").textContent = product.description;
 
 }
@@ -54,4 +57,26 @@ function displayTags(tags) {
         item.classList.add("items-center", "rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
         tagList.appendChild(item);
     }
+}
+
+// the add to cart on the single product view
+export function handleAddToCart() {
+    const button = document.querySelector("#add-to-cart-button");
+
+    button.addEventListener("click", () => {
+
+        const quantity = Number(document.querySelector("#product-quantity").value); // convert from text
+        if (quantity < 1) {
+            toastTimedMessage("Enter a quantity of 1 or more.");
+            return;
+        }
+
+        const id = Number(button.dataset.id);
+        const product = getProducts().find(p => p.id === id);
+
+        // temp: we dont have an actual add to cart function yet
+        console.log("add to cart:", product.title, quantity);
+
+        toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
+    })
 }
