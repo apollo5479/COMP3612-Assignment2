@@ -1,5 +1,6 @@
 import { getProducts } from "./data.js";
 import { toastTimedMessage, ratingToStars, buildProductCard} from "./helpers.js";
+import { displaySingleProduct, handleImageDialog } from "./product.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -9,8 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
     openHomePage();
     handleNavigation();
     handleAboutDialog();
+    handleImageDialog();
 
-    buildProductCard(products[0]);
+    // temp: only for testing
+    displaySingleProduct(products[67]);
+    hideContainersButOne(document.querySelector("#single-product"));
+
 });
 
 function hideContainersButOne(containerToShow) {
