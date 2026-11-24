@@ -1,5 +1,5 @@
 import { getProducts } from "./data.js";
-import { formatPrice, formatCategory, ratingToStars, toastTimedMessage} from "./helpers.js";
+import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement } from "./helpers.js";
 
 export function displaySingleProduct(product) {
 
@@ -18,6 +18,9 @@ export function displaySingleProduct(product) {
     document.querySelector("#product-sku").textContent = product.sku;
     document.querySelector("#product-availability").textContent = product.availabilityStatus;
     displayTags(product.tags);
+    displaySpecification(product);
+    displayReviews(product.reviews);
+    selectTab(document.querySelector("#specs-tab"), document.querySelector("#specs-panel"));   // every product opens on the specification tab
     document.querySelector("#product-quantity").value = 1;
     document.querySelector("#add-to-cart-button").dataset.id = product.id; // with this the button knows which product its for. adds the attribute data-id with products id as its vaule
     document.querySelector("#product-description").textContent = product.description;
@@ -50,12 +53,11 @@ export function handleImageDialog() {
 
 function displayTags(tags) {
     const tagList = document.querySelector("#product-tags");
+    tagList.replaceChildren(); // clear the previous product's tags
 
     for (let tag of tags) {
-        const item = document.createElement("li");
-        item.textContent = tag;
-        item.classList.add("items-center", "rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
-        tagList.appendChild(item);
+        const item = addTextElement(tagList, "li", tag);
+        item.classList.add("rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
     }
 }
 
@@ -78,5 +80,67 @@ export function handleAddToCart() {
         console.log("add to cart:", product.title, quantity);
 
         toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
-    })
+    });
+}
+
+function displaySpecification(product) {
+    const dimensions = product.dimensions;
+
+    document.querySelector("#product-weight").textContent = `${product.weight} kg`;
+    document.querySelector("#product-dimensions").textContent = `${dimensions.width} x ${dimensions.height} x ${dimensions.depth} cm`;
+    document.querySelector("#product-warranty").textContent = product.warrantyInformation;
+    document.querySelector("#product-shipping").textContent = product.shippingInformation;
+    document.querySelector("#product-return-policy").textContent = product.returnPolicy;
+}
+
+
+function displayReviews(reviews) {
+    const reviewList = document.querySelector("#reviews-panel");
+    reviewList.replaceChildren();       // clear the previous product's reviews
+
+    if (reviews.length === 0) {
+        addTextElement(reviewList, "li", "No reviews.");
+        return;
+    }
+
+    for (let review of reviews) {
+        const item = document.createElement("li");
+        item.classList.add("border-b", "py-2"); // TODO: styling
+
+        const name = addTextElement(item, "p", review.reviewerName);
+        name.classList.add("font-bold"); // TODO: styling
+
+        addTextElement(item, "p", ratingToStars(review.rating));
+
+        const date = addTextElement(item, "p", formatDate(review.date));
+        date.classList.add("text-sm", "font-bold") // TODO: styling
+
+        addTextElement(item, "p", review.comment);
+        reviewList.appendChild(item);
+    }
+}
+
+
+export function handleTabs() {
+    const specsTab = document.querySelector("#specs-tab");
+    const reviewsTab = document.querySelector("#reviews-tab");
+
+    specsTab.addEventListener("click", () => {selectTab(specsTab, document.querySelector("#specs-panel"))});
+    reviewsTab.addEventListener("click", () => {selectTab(reviewsTab, document.querySelector("#reviews-panel"))});
+}
+
+// shows one panel and hides the others
+function selectTab(tabToSelect, panelToShow) {
+
+    for (let tab of document.querySelectorAll(".product-tab")) {
+        tab.classList.remove("font-bold");
+    }
+
+    for (let panel of document.querySelectorAll(".product-panel")) {
+        panel.classList.add("hidden");
+    }
+
+    tabToSelect.classList.add("font-bold");  // the bold font shows which tab is selected
+    panelToShow.classList.remove("hidden");
+
 }

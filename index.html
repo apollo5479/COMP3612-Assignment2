@@ -90,7 +90,22 @@
                     <p id="product-description"></p>
                 </div>
             </section>
-            <section id="product-tabs"></section>
+
+            <section id="product-tabs">
+                <button id="specs-tab" class="product-tab font-bold">Specifications</button>
+                <button id="reviews-tab" class="product-tab">Reviews</button>
+
+                <div id="specs-panel" class="product-panel">
+                    <p>Weight: <span id="product-weight"></span></p>
+                    <p>Dimensions: <span id="product-dimensions"></span></p>
+                    <p>Warranty: <span id="product-warranty"></span></p>
+                    <p>Shipping: <span id="product-shipping"></span></p>
+                    <p>Return Policy: <span id="product-return-policy"></span></p>
+                </div>
+
+                <ul id="reviews-panel" class="product-panel hidden max-h-48 overflow-y-auto"></ul>
+            </section>
+
             <section id="related">
                 <h2>Related Products</h2>
                 <ul id="related-list"></ul>
@@ -161,7 +176,7 @@
         <img id="image-dialog-img" alt="">
     </dialog>
 
-    <div id="toast-msg"></div>
+    <div id="toast-msg" class="hidden"></div>
 
 </body>
 </html>

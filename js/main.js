@@ -1,6 +1,6 @@
 import { getProducts } from "./data.js";
 import { toastTimedMessage, ratingToStars, buildProductCard} from "./helpers.js";
-import { displaySingleProduct, handleImageDialog, handleAddToCart } from "./product.js";
+import { displaySingleProduct, handleImageDialog, handleAddToCart, handleTabs } from "./product.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleAboutDialog();
     handleImageDialog();
     handleAddToCart();
+    handleTabs();
 
     // temp: only for testing
     displaySingleProduct(products[67]);
@@ -22,10 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
 function hideContainersButOne(containerToShow) {
     const containers = document.querySelectorAll("article");
     for (let container of containers) {
-        container.style.display = "none";
+        container.classList.add("hidden");
     }
 
-    containerToShow.style.display = "block";
+    containerToShow.classList.remove("hidden");
 }
 
 function openHomePage() {
