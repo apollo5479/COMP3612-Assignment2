@@ -1,5 +1,7 @@
 import { getProducts } from "./data.js";
 import { displaySingleProduct, handleImageDialog, handleAddToCart, handleTabs } from "./product.js";
+import { addToCart, updateCartCount } from "./cart.js";
+import { toastTimedMessage } from "./helpers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -12,7 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
     handleImageDialog();
     handleAddToCart();
     handleTabs();
-    handleProductLinks();
+    handleProductCards();
+    updateCartCount();
 
     // temp: only for testing until we have product cards on Home
     openSingleProduct(products[67]);
@@ -70,21 +73,27 @@ function openSingleProduct(product) {
     hideContainersButOne(document.querySelector("#single-product"));
 }
 
-// opens a product when the img or title is clicked
-function handleProductLinks() {
+// handles the clicks on any product card
+function handleProductCards() {
 
     document.querySelector("main").addEventListener("click", (e) => {
+        const isProductLink = e.target.classList.contains("product-link");  // the card img or title
+        const isAddToCart = e.target.classList.contains("add-to-cart");     // the add to cart button
 
-        if (!e.target.classList.contains("product-link")) {
-            return;  // it is not a card img or title
+        if (!(isProductLink || isAddToCart)) {
+            return;
         }
+
 
         const card = e.target.parentNode;       // the cards li which holds the product id
         const id = Number(card.dataset.id);
         const product = getProducts().find(p => p.id === id);
 
-        openSingleProduct(product);
+        if (isProductLink) {
+            openSingleProduct(product);
+        } else {
+            addToCart(product, 1);
+            toastTimedMessage(`1x ${product.title} added to cart.`);
+        }
     });
-
-    // TODO: just like in handleAddToCart function in product.js, the add to carts dont do anything until a proper function to handle that is added
 }
