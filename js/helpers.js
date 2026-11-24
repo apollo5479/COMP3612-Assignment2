@@ -21,31 +21,28 @@ export function ratingToStars(rating) {
     return stars;
 }
 
+// builds one product card for Home, browse, and releated products
+// this returns the <li> so each different view adds it to its own list
 export function buildProductCard(product) {
-    const productDetails = document.querySelector("#product-details");
-    
-    //setting up the product card
-    const productThumbnail = document.createElement("img");
-    productThumbnail.src = product.thumbnail;
-    productThumbnail.alt = product.title; 
-    const productCard = document.createElement("div");
-    const productName = document.createElement("h2");
-    productName.textContent = product.title;
-    const productPrice = document.createElement("p");
-    productPrice.textContent = `$${product.price.toFixed(2)}`;
+    const card = document.createElement("li");
+    card.dataset.id = product.id;
+    card.classList.add("border", "rounded", "p-2"); // TODO: styling on the card
 
-    //not done yet, need to convert to star emojis
-    //const productRating = document.createElement("p");
-    //const stars = ratingToStars(product.rating);
-    //productRating.textContent = `Rating: ${stars} stars`;
+    const thumbnail = document.createElement("img");
+    thumbnail.src = product.thumbnail;
+    thumbnail.alt = product.title;
+    thumbnail.classList.add("product-link", "cursor-pointer");   // clicking opens the product
+    card.appendChild(thumbnail);
 
-    //appending everything
-    productCard.appendChild(productName);
-    productCard.appendChild(productPrice);
-    productDetails.appendChild(productThumbnail); 
-    //productCard.appendChild(productRating); 
+    const title = addTextElement(card, "h3", product.title);
+    title.classList.add("product-link", "cursor-pointer", "font-bold");
 
-    productDetails.appendChild(productCard);
+    addTextElement(card, "p", formatPrice(product.price));
+
+    const button = addTextElement(card, "button", "Add to Cart");
+    button.classList.add("add-to-cart");
+
+    return card;
 }
 
 export function formatPrice(price) {

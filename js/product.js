@@ -1,5 +1,5 @@
 import { getProducts } from "./data.js";
-import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement } from "./helpers.js";
+import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement, buildProductCard } from "./helpers.js";
 
 export function displaySingleProduct(product) {
 
@@ -20,6 +20,7 @@ export function displaySingleProduct(product) {
     displayTags(product.tags);
     displaySpecification(product);
     displayReviews(product.reviews);
+    displayRelatedProducts(product);
     selectTab(document.querySelector("#specs-tab"), document.querySelector("#specs-panel"));   // every product opens on the specification tab
     document.querySelector("#product-quantity").value = 1;
     document.querySelector("#add-to-cart-button").dataset.id = product.id; // with this the button knows which product its for. adds the attribute data-id with products id as its vaule
@@ -143,4 +144,21 @@ function selectTab(tabToSelect, panelToShow) {
     tabToSelect.classList.add("font-bold");  // the bold font shows which tab is selected
     panelToShow.classList.remove("hidden");
 
+}
+
+// shows up to 5 other products from the same category 
+function displayRelatedProducts(product) {
+    const relatedList = document.querySelector("#related-list");
+    relatedList.replaceChildren();    // clears the previous product's related items
+
+    const related = getProducts().filter(p => p.category === product.category && p.id !== product.id);  // the same category but not the product being viewd
+
+    if (related.length === 0) {
+        addTextElement(relatedList, "li", "No related products.");
+        return;
+    }
+
+    for (let relatedProduct of related.slice(0, 5)) {
+        relatedList.appendChild(buildProductCard(relatedProduct));
+    }   
 }
