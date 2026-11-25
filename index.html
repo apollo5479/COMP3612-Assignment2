@@ -117,13 +117,16 @@
             <h1>Shopping Cart</h1>
             <p id="cart-empty">Your cart is empty.</p>
             <table id="cart-table">
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
             </table>
 
             <section id="shipping">
@@ -134,6 +137,7 @@
                     <option value="express">Express</option>
                     <option value="priority">Priority</option>
                 </select>
+                
                 <label for="destination-select">Destination</label>
                 <select id="destination-select">
                     <option value="canada">Canada</option>
@@ -176,7 +180,7 @@
         <img id="image-dialog-img" alt="">
     </dialog>
 
-    <div id="toast-msg" class="hidden"></div>
+    <div id="toast-msg" class="hidden fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded"></div>
 
 </body>
 </html>

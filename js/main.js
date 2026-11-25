@@ -1,6 +1,6 @@
 import { getProducts } from "./data.js";
 import { displaySingleProduct, handleImageDialog, handleAddToCart, handleTabs } from "./product.js";
-import { addToCart, updateCartCount } from "./cart.js";
+import { addToCart, updateCartCount, displayCart, handleCartItems } from "./cart.js";
 import { toastTimedMessage } from "./helpers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     handleTabs();
     handleProductCards();
     updateCartCount();
+    displayCart();
+    handleCartItems();
 
     // temp: only for testing until we have product cards on Home
     openSingleProduct(products[67]);
