@@ -1,5 +1,6 @@
 import { getProducts } from "./data.js";
 import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement, buildProductCard } from "./helpers.js";
+import { addToCart } from "./cart.js";
 
 export function displaySingleProduct(product) {
 
@@ -77,9 +78,7 @@ export function handleAddToCart() {
         const id = Number(button.dataset.id);
         const product = getProducts().find(p => p.id === id);
 
-        // temp: we dont have an actual add to cart function yet
-        console.log("add to cart:", product.title, quantity);
-
+        addToCart(product, quantity);
         toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
     });
 }
