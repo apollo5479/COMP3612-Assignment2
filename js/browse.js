@@ -23,7 +23,7 @@ function displayProducts(products) {
 
     resultsList.replaceChildren(); // clear the results list
 
-    if (products.length === 0) {
+    if (products.length == 0) {
         noMatches.style.display = "block"; // show the no matches message
         return;
     }
@@ -79,50 +79,101 @@ function createCard(product) {
     return card;
 }
 
-// TO DO: add event listener for addToCartButton to show toast message AND add product to cart
-function showToast(message) {
-    const toast = document.querySelector("#toast-msg");
-    toast.textContent = message;
-    //toast.className = "show"; // TO DO: dont forget to make the CSS for this
-    let toastTimeout = setTimeout(() => {
-        toast.style.display = "none"; 
-    }, 3000);
-}
-
-function openSingleProductView() {
+function openSingleProductView() { // not done
     //DOMContentLoaded required for event listener for clicking thumbnail or title
 }
 
 function whichSort(sortToDo, products){
-    //switch case sortToDo
+    // make shallow copy, since sort mutates the array
+    const productsCopy = [...products];
+
+    //sort((next,curr)), if negative then next comes before curr, if positive then curr comes before next, if 0 then no change
     switch (sortToDo) {
-        case "AtoZ":
-            console.log("whichSort AtoZ");
-            break;
         case "price":
-            console.log("whichSort price");
+            productsCopy.sort((a, b) => a.price - b.price);
             break;
         case "category":
-            console.log("whichSort category");
+            productsCopy.sort((a, b) => {
+                if (a.category.toLowerCase() < b.category.toLowerCase()) {
+                    return -1;
+                }
+                if (a.category.toLowerCase() > b.category.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            });
+            break;
+        case "AtoZ":
+        default:
+            productsCopy.sort((a, b) => {
+                if (a.title.toLowerCase() < b.title.toLowerCase()) {
+                    return -1;
+                }
+                if (a.title.toLowerCase() > b.title.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            });
             break;
     }
+    return productsCopy;
 }
 
 
 //four filter groups: name, category, rating, and price
-function filterProducts(products, whichFilter) {
-    if () {
+function filterByName(products, name) {
+    return products.filter(product =>
+        product.title.toLowerCase().includes(name.toLowerCase())
+    );
+}
+function filterByCategory(products, selectedCategories) {
+    if (selectedCategories.length == 0) {
+        return products;
+    }
 
+    return products.filter(product =>
+        selectedCategories.includes(product.category)
+    );
+}
+function filterByRating(products, minRating) {
+    return products.filter(product =>
+        product.rating >= minRating
+    );
+}
+function filterByPrice(products, price, overOrUnder) {
+    if (overOrUnder === "over") {
+        return products.filter(product =>
+            product.price >= price
+        );
     } else {
-        //default to product name filter if nothing else
+        return products.filter(product =>
+            product.price <= price
+        );
     }
 }
 
-function updateShownFilters(){
+function applyFilters(products, categories, minPrice, maxPrice, name, sortToDo) {
+    let results = [...products];
+
+    results = filterByCategory(results, categories);
+    results = filterByPrice(results, minPrice, "over");
+    results = filterByPrice(results, maxPrice, "under");
+    results = filterByName(results, name);
+    results = filterByRating(results, minRating);
+    results = whichSort(sortToDo, results);
+
+    displayProducts(results);
+}
+
+function updateShownFilters() { // not done
 
 }
 
-function clearAllFilters() {
+function clearAllFilters() { // not done
+
+}
+
+function removeFilter(filterType, filterValue) { // not done
 
 }
 
