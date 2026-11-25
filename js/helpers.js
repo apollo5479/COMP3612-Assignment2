@@ -7,6 +7,15 @@ export function toastTimedMessage(message) {
     }, 3000);
 }
 
+export function hideContainersButOne(containerToShow) {
+    const containers = document.querySelectorAll("article");
+    for (let container of containers) {
+        container.classList.add("hidden");
+    }
+
+    containerToShow.classList.remove("hidden");
+}
+
 export function ratingToStars(rating) {
     const fullStars = Math.round(rating);
     let stars = "";

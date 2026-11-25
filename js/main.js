@@ -1,7 +1,7 @@
 import { getProducts } from "./data.js";
-import { displaySingleProduct, handleImageDialog, handleAddToCart, handleTabs } from "./product.js";
-import { addToCart, updateCartCount, displayCart, handleCartItems } from "./cart.js";
-import { toastTimedMessage } from "./helpers.js";
+import { displaySingleProduct, initSingleProductView } from "./product.js";
+import { addToCart, initCart } from "./cart.js";
+import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -11,27 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     openHomePage();
     handleNavigation();
     handleAboutDialog();
-    handleImageDialog();
-    handleAddToCart();
-    handleTabs();
+    initSingleProductView();
     handleProductCards();
-    updateCartCount();
-    displayCart();
-    handleCartItems();
+    initCart();
 
     // temp: only for testing until we have product cards on Home
     openSingleProduct(products[67]);
 
 });
-
-function hideContainersButOne(containerToShow) {
-    const containers = document.querySelectorAll("article");
-    for (let container of containers) {
-        container.classList.add("hidden");
-    }
-
-    containerToShow.classList.remove("hidden");
-}
 
 function openHomePage() {
     hideContainersButOne(document.querySelector("#home"));

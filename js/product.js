@@ -9,7 +9,6 @@ export function displaySingleProduct(product) {
 
 
     const image = document.querySelector("#product-img");
-
     image.src = product.images[0];
     image.alt = product.title;
 
@@ -29,7 +28,14 @@ export function displaySingleProduct(product) {
 
 }
 
-export function handleImageDialog() {
+// sets up the controls for the single product view on page load
+export function initSingleProductView() {
+    handleImageDialog();
+    handleAddToCart();
+    handleTabs();
+}
+
+function handleImageDialog() {
     const imgDialog = document.querySelector("#image-dialog");
     const image = document.querySelector("#product-img");
 
@@ -64,7 +70,7 @@ function displayTags(tags) {
 }
 
 // the add to cart on the single product view
-export function handleAddToCart() {
+function handleAddToCart() {
     const button = document.querySelector("#add-to-cart-button");
 
     button.addEventListener("click", () => {
@@ -121,7 +127,7 @@ function displayReviews(reviews) {
 }
 
 
-export function handleTabs() {
+function handleTabs() {
     const specsTab = document.querySelector("#specs-tab");
     const reviewsTab = document.querySelector("#reviews-tab");
 
