@@ -1,5 +1,6 @@
 import { addTextElement, formatPrice, toastTimedMessage, hideContainersButOne } from "./helpers.js";
 
+// ================================================================ Cart Data and Storage ================================================================
 // constructor function for one item in the cart
 function CartItem(product, quantity) {
     this.id = product.id;
@@ -29,7 +30,10 @@ function loadCart() {
     return JSON.parse(localStorage.getItem(cartKey)) || [];
 }
 
-// sets up the cart on page load, shows the saved cart and connects the controls for the cart view
+
+// ================================================================ Functions Used In Other Files ================================================================
+
+// sets up the cart on page load, shows the saved cart and, sets up the event handlers for the cart view
 export function initCart() {
     updateCartCount();
     displayCart();
@@ -50,15 +54,85 @@ export function addToCart(product, quantity) {
     cartChanged();
 }
 
-// updates total count in the cart in the header
-function updateCartCount() {
-    let count = 0;
-    
-    for (let item of cart) {
-        count += item.quantity;
-    } 
 
-    document.querySelector("#cart-count").textContent = count;
+
+// ================================================================ Changing The Cart ================================================================
+
+// whenever there is any change to the cart
+function cartChanged() {
+    saveCart();
+    updateCartCount();
+    displayCart();
+}
+
+// function for when checkout button is clicked. show toast, clear cart, and return to home
+function checkout() {
+    cart = [];
+    cartChanged();
+    toastTimedMessage("Thank you for shopping with us!");
+    hideContainersButOne(document.querySelector("#home"));
+}
+
+
+// ================================================================ Event Handling For The Cart ================================================================
+
+// handles everything changed or clicked in the cart view
+function handleCartView() {
+    const cartView = document.querySelector("#cart");
+
+    // handle the quantity and the shipping and destination change
+    cartView.addEventListener("change", (e) => {
+        if (e.target.classList.contains("cart-quantity")) {
+            const row = e.target.parentNode.parentNode;  // the input is inside td, which is inside the tr that has dataset.id
+            const id = Number(row.dataset.id);
+
+            let quantity = Number(e.target.value);
+            if (quantity < 1) {
+                quantity = 1;   // anything below 1 is set back to 1 cause we use the remove button to remove
+            }
+
+            const item = cart.find(item => item.id === id);
+            item.quantity = quantity;
+            cartChanged();
+        } else if (e.target.id === "shipping-select" || e.target.id === "destination-select") {
+            displaySummary();       // the change was made to the shipping or destination so we recalculate the summary
+        }
+
+    });
+
+    // handle the remove buttons and checkout button
+    cartView.addEventListener("click", (e) => {
+
+        if (e.target.classList.contains("cart-remove")) {
+            const row = e.target.parentNode.parentNode;  // the button is inside td, which is inside the tr
+            const id = Number(row.dataset.id);
+            const removedItem = cart.find(item => item.id === id);  // getting the item that was removed for the toast message
+
+            cart = cart.filter(item => item.id !== id);
+            cartChanged();
+            toastTimedMessage(`${removedItem.title} removed from cart.`);
+
+        } else if (e.target.id === "checkout-button") {
+            checkout();         // the checkout button was clicked
+        }
+    
+    });
+}
+
+
+// ================================================================ Displaying The Cart View ================================================================
+
+// redraws the cart table, summary, and empty cart state from the cart array
+function displayCart() {
+    const cartItems = document.querySelector("#cart-items");
+    cartItems.replaceChildren();    // clears the old rows
+
+    for (let item of cart) {
+        cartItems.appendChild(buildCartRow(item));
+    }
+
+    displaySummary();
+    updateEmptyCart();
 }
 
 // builds one table row for a cart item
@@ -111,50 +185,32 @@ function buildRemoveCell() {
     return cell;
 }
 
+// displays msg if the cart is empty and disables shipping and checkout option
+function updateEmptyCart() {
+    const isEmpty = cart.length === 0;
 
-// handles everything changed or clicked in the cart view
-function handleCartView() {
-    const cartView = document.querySelector("#cart");
+    document.querySelector("#cart-empty").classList.toggle("hidden", !isEmpty);
+    document.querySelector("#cart-table").classList.toggle("hidden", isEmpty);
 
-    // handle the quantity and the shipping and destination change
-    cartView.addEventListener("change", (e) => {
-        if (e.target.classList.contains("cart-quantity")) {
-            const row = e.target.parentNode.parentNode;  // the input is inside td, which is inside the tr that has dataset.id
-            const id = Number(row.dataset.id);
+    document.querySelector("#shipping-select").disabled = isEmpty;
+    document.querySelector("#destination-select").disabled = isEmpty;
+    document.querySelector("#checkout-button").disabled = isEmpty;
 
-            let quantity = Number(e.target.value);
-            if (quantity < 1) {
-                quantity = 1;   // anything below 1 is set back to 1 cause we use the remove button to remove
-            }
-
-            const item = cart.find(item => item.id === id);
-            item.quantity = quantity;
-            cartChanged();
-        } else if (e.target.id === "shipping-select" || e.target.id === "destination-select") {
-            displaySummary();       // the change was made to the shipping or destination so we recalculate the summary
-        }
-
-    });
-
-    // handle the remove buttons and checkout button
-    cartView.addEventListener("click", (e) => {
-
-        if (!e.target.classList.contains("cart-remove")) {
-            const row = e.target.parentNode.parentNode;  // the button is inside td, which is inside the tr
-            const id = Number(row.dataset.id);
-            const removedItem = cart.find(item => item.id === id);  // getting the item that was removed for the toast message
-
-            cart = cart.filter(item => item.id !== id);
-            cartChanged();
-            toastTimedMessage(`${removedItem.title} removed from cart.`);
-
-        } else if (e.target.id === "checkout-button") {
-            checkout();         // the checkout button was clicked
-        }
-    
-    });
 }
 
+// updates total count in the cart in the header
+function updateCartCount() {
+    let count = 0;
+    
+    for (let item of cart) {
+        count += item.quantity;
+    } 
+
+    document.querySelector("#cart-count").textContent = count;
+}
+
+
+// ================================================================ Summary ================================================================
 
 function displaySummary() {
     const method = document.querySelector("#shipping-select").value;
@@ -197,45 +253,4 @@ function getTax(merchandise, destination) {
     }
 
     return 0;
-}
-
-// displays msg if the cart is empty and disables shipping and checkout option
-function updateEmptyCart() {
-    const isEmpty = cart.length === 0;
-
-    document.querySelector("#cart-empty").classList.toggle("hidden", !isEmpty);
-    document.querySelector("#cart-table").classList.toggle("hidden", isEmpty);
-
-    document.querySelector("#shipping-select").disabled = isEmpty;
-    document.querySelector("#destination-select").disabled = isEmpty;
-    document.querySelector("#checkout-button").disabled = isEmpty;
-
-}
-
-// function for when checkout button is clicked. show toast, clear cart, and return to home
-function checkout() {
-    cart = [];
-    cartChanged();
-    toastTimedMessage("Thank you for shopping with us!");
-    hideContainersButOne(document.querySelector("#home"));
-}
-
-// redraws the cart table from the cart array
-function displayCart() {
-    const cartItems = document.querySelector("#cart-items");
-    cartItems.replaceChildren();    // clears the old rows
-
-    for (let item of cart) {
-        cartItems.appendChild(buildCartRow(item));
-    }
-
-    displaySummary();
-    updateEmptyCart();
-}
-
-// whenever something is added or removed from a cart
-function cartChanged() {
-    saveCart();
-    updateCartCount();
-    displayCart();
 }
