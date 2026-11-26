@@ -117,24 +117,28 @@
             <h1>Shopping Cart</h1>
             <p id="cart-empty">Your cart is empty.</p>
             <table id="cart-table">
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
             </table>
 
             <section id="shipping">
                 <h2>Shipping</h2>
-                <label for="shipping-select">Method</label>
+                <label for="shipping-select" class="disabled:opacity-50">Method</label>
                 <select id="shipping-select">
                     <option value="standard">Standard</option>
                     <option value="express">Express</option>
                     <option value="priority">Priority</option>
                 </select>
-                <label for="destination-select">Destination</label>
+                
+                <label for="destination-select" class="disabled:opacity-50">Destination</label>
                 <select id="destination-select">
                     <option value="canada">Canada</option>
                     <option value="usa">United States</option>
@@ -148,7 +152,7 @@
                 <p>Shipping<span id="summary-shipping"></span></p>
                 <p>Tax<span id="summary-tax"></span></p>
                 <p>Total<span id="summary-total"></span></p>
-                <button id="checkout-button">Checkout</button>
+                <button id="checkout-button" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Checkout</button>
             </section>
         </article>
 
@@ -176,7 +180,7 @@
         <img id="image-dialog-img" alt="">
     </dialog>
 
-    <div id="toast-msg" class="hidden"></div>
+    <div id="toast-msg" class="hidden fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded"></div>
 
 </body>
 </html>

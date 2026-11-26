@@ -2,6 +2,17 @@ import { getProducts } from "./data.js";
 import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement, buildProductCard } from "./helpers.js";
 import { addToCart } from "./cart.js";
 
+
+// ================================================================ Functions Used In Other Files ================================================================
+
+// sets up the event handlers for the single product view on page load
+export function initSingleProductView() {
+    handleImageDialog();
+    handleAddToCart();
+    handleTabs();
+}
+
+// main function for displaying a single product
 export function displaySingleProduct(product) {
 
     document.querySelector("#breadcrumb-category").textContent = formatCategory(product.category);
@@ -9,7 +20,6 @@ export function displaySingleProduct(product) {
 
 
     const image = document.querySelector("#product-img");
-
     image.src = product.images[0];
     image.alt = product.title;
 
@@ -29,30 +39,9 @@ export function displaySingleProduct(product) {
 
 }
 
-export function handleImageDialog() {
-    const imgDialog = document.querySelector("#image-dialog");
-    const image = document.querySelector("#product-img");
 
-    image.addEventListener("click", () => {
-        const dialogBigImg = document.querySelector("#image-dialog-img");
-        dialogBigImg.src = image.src;
-        dialogBigImg.alt = image.alt;
-        imgDialog.showModal();
-    });
 
-    document.querySelector("#image-close-button").addEventListener("click", () => {
-        imgDialog.close();
-    });
-
-    // close the image when the area outside of the dialog is clicked
-    imgDialog.addEventListener("click", (e) => {
-        
-        if (e.target === imgDialog) {
-            imgDialog.close();
-        }
-    });
-}
-
+// ================================================================ Functions For Displaying Used In displaySingleProduct ================================================================
 function displayTags(tags) {
     const tagList = document.querySelector("#product-tags");
     tagList.replaceChildren(); // clear the previous product's tags
@@ -61,26 +50,6 @@ function displayTags(tags) {
         const item = addTextElement(tagList, "li", tag);
         item.classList.add("rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
     }
-}
-
-// the add to cart on the single product view
-export function handleAddToCart() {
-    const button = document.querySelector("#add-to-cart-button");
-
-    button.addEventListener("click", () => {
-
-        const quantity = Number(document.querySelector("#product-quantity").value); // convert from text
-        if (quantity < 1) {
-            toastTimedMessage("Enter a quantity of 1 or more.");
-            return;
-        }
-
-        const id = Number(button.dataset.id);
-        const product = getProducts().find(p => p.id === id);
-
-        addToCart(product, quantity);
-        toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
-    });
 }
 
 function displaySpecification(product) {
@@ -92,7 +61,6 @@ function displaySpecification(product) {
     document.querySelector("#product-shipping").textContent = product.shippingInformation;
     document.querySelector("#product-return-policy").textContent = product.returnPolicy;
 }
-
 
 function displayReviews(reviews) {
     const reviewList = document.querySelector("#reviews-panel");
@@ -120,8 +88,71 @@ function displayReviews(reviews) {
     }
 }
 
+// shows up to 5 other products from the same category 
+function displayRelatedProducts(product) {
+    const relatedList = document.querySelector("#related-list");
+    relatedList.replaceChildren();    // clears the previous product's related items
 
-export function handleTabs() {
+    const related = getProducts().filter(p => p.category === product.category && p.id !== product.id);  // the same category but not the product being viewd
+
+    if (related.length === 0) {
+        addTextElement(relatedList, "li", "No related products.");
+        return;
+    }
+
+    for (let relatedProduct of related.slice(0, 5)) {
+        relatedList.appendChild(buildProductCard(relatedProduct));
+    }   
+}
+
+
+// ================================================================ Functions For Event Handling Used In initSingleProductView ================================================================
+
+function handleImageDialog() {
+    const imgDialog = document.querySelector("#image-dialog");
+    const image = document.querySelector("#product-img");
+
+    image.addEventListener("click", () => {
+        const dialogBigImg = document.querySelector("#image-dialog-img");
+        dialogBigImg.src = image.src;
+        dialogBigImg.alt = image.alt;
+        imgDialog.showModal();
+    });
+
+    document.querySelector("#image-close-button").addEventListener("click", () => {
+        imgDialog.close();
+    });
+
+    // close the image when the area outside of the dialog is clicked
+    imgDialog.addEventListener("click", (e) => {
+        
+        if (e.target === imgDialog) {
+            imgDialog.close();
+        }
+    });
+}
+
+// the add to cart on the single product view
+function handleAddToCart() {
+    const button = document.querySelector("#add-to-cart-button");
+
+    button.addEventListener("click", () => {
+
+        const quantity = Number(document.querySelector("#product-quantity").value); // convert from text
+        if (quantity < 1) {
+            toastTimedMessage("Enter a quantity of 1 or more.");
+            return;
+        }
+
+        const id = Number(button.dataset.id);
+        const product = getProducts().find(p => p.id === id);
+
+        addToCart(product, quantity);
+        toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
+    });
+}
+
+function handleTabs() {
     const specsTab = document.querySelector("#specs-tab");
     const reviewsTab = document.querySelector("#reviews-tab");
 
@@ -143,21 +174,4 @@ function selectTab(tabToSelect, panelToShow) {
     tabToSelect.classList.add("font-bold");  // the bold font shows which tab is selected
     panelToShow.classList.remove("hidden");
 
-}
-
-// shows up to 5 other products from the same category 
-function displayRelatedProducts(product) {
-    const relatedList = document.querySelector("#related-list");
-    relatedList.replaceChildren();    // clears the previous product's related items
-
-    const related = getProducts().filter(p => p.category === product.category && p.id !== product.id);  // the same category but not the product being viewd
-
-    if (related.length === 0) {
-        addTextElement(relatedList, "li", "No related products.");
-        return;
-    }
-
-    for (let relatedProduct of related.slice(0, 5)) {
-        relatedList.appendChild(buildProductCard(relatedProduct));
-    }   
 }
