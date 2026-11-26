@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     buildProductCard(products[0]);
 });
 
-function hideContainersButOne(containerToShow) {
+export function hideContainersButOne(containerToShow) {
     const containers = document.querySelectorAll("article");
     for (let container of containers) {
         container.style.display = "none";
