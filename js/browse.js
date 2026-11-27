@@ -1,55 +1,10 @@
-import { getProducts } from "./data.js";
-import { createCard, toastTimedMessage } from "./helpers.js";
-import { hideContainersButOne } from "./main.js";
+import { buildProductCard, toastTimedMessage } from "./helpers.js";
 import { loadCategories } from "./category.js";
 
-document.addEventListener("DOMContentLoaded", function() {
-    const products = getProducts();
-    clearAllFilters(products);
+
+export function handleBrowseInit(products) {
     loadCategories(products);
-
-
-    function displayProducts(products) {
-        const results_list = document.querySelector("#results-list");
-        const no_matches = document.querySelector("#no-matches");
-
-        results_list.replaceChildren(); // clear the results list
-
-        if (products.length == 0) {
-            no_matches.style.display = "block";
-            return;
-        }
-        no_matches.style.display = "none";
-        
-        for (const product of products) {
-            const card = createCard(product);
-            results_list.appendChild(card);
-        }
-    }
-
-    // https://www.w3schools.com/jsref/prop_text_value.asp
-    // was looking for a to get input value instead of passing values into the function
-    function applyFilters(products) {
-        const target_price = document.querySelector("#price-filter").value;
-        const name = document.querySelector("#name-filter").value;
-        const min_rating = document.querySelector("#rating-filter").value;
-        const sort_to_do = document.querySelector("#sort-select").value;
-        const over_or_under = document.querySelector("#over-under").value;
-        let results = [...products];
-
-        results = filterByCategory(results);
-        results = filterByPrice(results, target_price, over_or_under);
-        results = filterByName(results, name);
-        results = filterByRating(results, min_rating);
-        results = whichSort(sort_to_do, results);
-
-        if (results.length == 0) {
-            toastTimedMessage("No matches found.");
-        }
-        
-        displayProducts(results);
-    }
-
+    clearAllFilters(products);
 
     document.querySelector("#apply-filters").addEventListener("click", () => {
         applyFilters(products);
@@ -60,11 +15,59 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector("#sort-select").addEventListener("change", () => {
         applyFilters(products);
     });
-});
+}
 
 
+function displayProducts(products) {
+    const results_list = document.querySelector("#results-list");
+    const no_matches = document.querySelector("#no-matches");
+
+    results_list.replaceChildren(); // clear the results list
+
+    if (products.length == 0) {
+        no_matches.style.display = "block";
+        return;
+    }
+    no_matches.style.display = "none";
+    
+    for (const product of products) {
+        const card = buildProductCard(product);
+        results_list.appendChild(card);
+    }
+}
 
 
+// https://www.w3schools.com/jsref/prop_text_value.asp
+// was looking for a to get input value instead of passing values into the function
+function applyFilters(products) {
+    const target_price = document.querySelector("#price-filter").value;
+    const name = document.querySelector("#name-filter").value;
+    const min_rating = document.querySelector("#rating-filter").value;
+    const sort_to_do = document.querySelector("#sort-select").value;
+    const over_or_under = document.querySelector("#over-under").value;
+    
+    let results = [...products];
+
+    const checkedCategories = document.querySelectorAll(
+        "#category-filters input:checked"
+    );
+    const selected_categories = [];
+    for (const category of checkedCategories) {
+        selected_categories.push(category.value);
+    }
+
+    results = filterByCategory(results, selected_categories);
+    results = filterByPrice(results, target_price, over_or_under);
+    results = filterByName(results, name);
+    results = filterByRating(results, min_rating);
+    results = whichSort(sort_to_do, results);
+
+    if (results.length == 0) {
+        toastTimedMessage("No matches found.");
+    }
+    
+    displayProducts(results);
+}
 
 
 function whichSort(sort_to_do, products){
@@ -125,50 +128,30 @@ function filterByRating(products, min_rating) {
     );
 }
 function filterByPrice(products, price, over_or_under) {
-    if (over_or_under === "over") {
+    if (price == "") {
+        return products;
+    }
+
+    const target_price = Number(price);
+
+    if (over_or_under == "over") {
         return products.filter(product =>
-            product.price >= price
+            product.price >= target_price
         );
-    } else {
+    } else if (over_or_under == "under") {
         return products.filter(product =>
-            product.price <= price
+            product.price <= target_price
         );
     }
 }
 
 
-export function openSingleProductView(product) {
-    hideContainersButOne(document.querySelector("#single-product"));
-
-    // remove any previous single product details and breadcrumb
-    const details = document.querySelector("#product-details");
-    const breadcrumb = document.querySelector("#breadcrumb");
-    details.replaceChildren();
-    breadcrumb.replaceChildren();
-
-    // set breadcrumb and product details
-    breadcrumb.textContent = `Home > Browse > ${product.title}`;
-    const img = document.createElement("img");
-    img.src = product.thumbnail;
-    img.alt = product.title;
-    const title = document.createElement("h2");
-    title.textContent = product.title;
-    const price = document.createElement("p");
-    price.textContent = `$${product.price}`;
-    const description = document.createElement("p");
-    description.textContent = product.description;
-
-    details.append(img, title, price, description);
-    // not added yet: related products and product tabs
-}
-
-
 function clearAllFilters(products) {
     // reset the filter inputs to their default values
-    document.querySelector("#name-filter").value = "Search products...";
-    document.querySelector("#price-filter").value = "0";
+    document.querySelector("#name-filter").value = "";
+    document.querySelector("#price-filter").value = "";
     document.querySelector("#rating-filter").value = "0";
-    document.querySelector("#overUnder").value = "Over";
+    document.querySelector("#over-under").value = "Over";
 
     const categories = document.querySelectorAll("#category-filters input[type='checkbox']");
     for (const category of categories) {

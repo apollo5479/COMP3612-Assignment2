@@ -1,4 +1,4 @@
-import { openSingleProductView } from "./browse.js";
+import { displaySingleProduct } from "./product.js";
 
 export function toastTimedMessage(message) {
     const toast = document.querySelector("#toast-msg");
@@ -10,54 +10,65 @@ export function toastTimedMessage(message) {
 }
 
 export function ratingToStars(rating) {
-    const stars = Math.floor(rating);
+    const fullStars = Math.round(rating);
+    let stars = "";
+
+    for (let i = 0; i < 5; i++) {
+        if (i < fullStars) {
+            stars += "★";
+        } else {
+            stars += "☆";
+        }
+    }
     return stars;
 }
 
-export function createCard(product) {
-    const card = document.createElement("li");
-    card.className = "product-card"; // TO DO: dont forget to make the CSS for this
+export function buildProductCard(product) {
+const productDetails = document.querySelector("#product-details");
 
-    const img = document.createElement("img");
-    img.src = product.image;
-    img.alt = product.title;
-    img.className = "product-thumbnail"; // TO DO: dont forget to make the CSS for this 
+    // setting up the product card
+    const productCard = document.createElement("div");
 
-    const title = document.createElement("h3");
-    title.textContent = product.title;
-    title.className = "product-title"; // TO DO: dont forget to make the CSS for this
+    const productThumbnail = document.createElement("img");
+    productThumbnail.src = product.thumbnail;
+    productThumbnail.alt = product.title;
 
-    const price = document.createElement("p");
-    price.textContent = `$${product.price}`;
-    price.className = "product-price"; // TO DO: dont forget to make the CSS for this
+    const productName = document.createElement("h2");
+    productName.textContent = product.title;
 
-    const rating = document.createElement("p");
-    const stars = ratingToStars(product.rating);
-    rating.textContent = `Rating: ${stars} stars`;
+    const productPrice = document.createElement("p");
+    productPrice.textContent = `$${product.price.toFixed(2)}`;
 
-    // clickable thumbnail and title
-    const productLink = document.createElement("a");
-    productLink.href = "#single-product";
-    productLink.className = "product-link"; // TO DO: dont forget to make the CSS for this
-
-    productLink.appendChild(img);
-    productLink.appendChild(title);
-    productLink.addEventListener("click", () => {
-        openSingleProductView(product);
-    } );
+    // starEmojis is whole number, product.rating is the original value
+    const productRating = document.createElement("p");
+    productRating.textContent = `Rating: ${ratingToStars(product.rating)} (${product.rating})`;
 
     // add to cart button
     const addToCartButton = document.createElement("button");
     addToCartButton.textContent = "Add to Cart";
-    addToCartButton.className = "add-to-cart-button"; // TO DO: dont forget to make the CSS for this
+    addToCartButton.className = "add-to-cart-button";
+
     addToCartButton.addEventListener("click", () => {
         toastTimedMessage(`${product.title} added to cart!`);
-    } );
+    });
 
-    card.appendChild(productLink);
-    card.appendChild(price);
-    card.appendChild(addToCartButton);
-    card.appendChild(rating);
+    // clickable thumbnail and title
+    const productLink = document.createElement("a");
+    productLink.href = "#single-product";
+    productLink.className = "product-link";
 
-    return card;
+    productLink.appendChild(productThumbnail);
+    productLink.appendChild(productName);
+
+    productLink.addEventListener("click", () => {
+        displaySingleProduct(product);
+    });
+
+    //appending everything
+    productCard.appendChild(productLink);
+    productCard.appendChild(productPrice);
+    productCard.appendChild(productRating);
+    productCard.appendChild(addToCartButton);
+
+    productDetails.appendChild(productCard);
 }

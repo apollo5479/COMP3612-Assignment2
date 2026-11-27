@@ -1,5 +1,6 @@
 import { getProducts } from "./data.js";
 import { toastTimedMessage, ratingToStars, buildProductCard} from "./helpers.js";
+import { handleBrowseInit } from "./browse.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -7,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(products);
 
     openHomePage();
+    handleBrowseInit(products);
     handleNavigation();
     handleAboutDialog();
 

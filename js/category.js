@@ -11,6 +11,13 @@ export function loadCategories(products) { // not done
     }
     
     for (let category of categories) {
+        // name for categories
+        const label = document.createElement("label");
+        label.textContent = category;
+        label.htmlFor = category;
+        container.appendChild(label);
+
+        // the actual checkboxes
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.id = category;
