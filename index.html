@@ -97,37 +97,80 @@
         </article>
 
         <article id="single-product">
-            <nav id="breadcrumb"></nav>
-            <section id="product-details"></section>
-            <section id="product-tabs"></section>
+            <nav id="breadcrumb">
+                <a href="#home" class="nav-link">Home</a>
+                <span> &gt; </span>
+                <a href="#browse" class="nav-link" id="breadcrumb-category"></a> <!-- shows the product's category and opens browse for now with all the products. once filters are working it will show browse filtered to this category-->
+                <span> &gt; </span>
+                <span id="breadcrumb-title"></span>
+            </nav>
+
+            <section id="product-details">
+                <img id="product-img" class="cursor-pointer" alt="">
+                <div>
+                    <h1 id="product-title"></h1>
+                    <p id="product-rating"></p>
+                    <p id="product-price"></p>
+                    <p>SKU: <span id="product-sku"></span></p>
+                    <p id="product-availability"></p>
+                    <ul id="product-tags" class="flex flex-wrap gap-0.5"></ul>
+
+                    <label for="product-quantity">Quantity</label>
+                    <input type="number" id="product-quantity" min="1" value="1">
+                    <button id="add-to-cart-button">Add to Cart</button>
+                    
+                    <p id="product-description"></p>
+                </div>
+            </section>
+
+            <section id="product-tabs">
+                <button id="specs-tab" class="product-tab font-bold">Specifications</button>
+                <button id="reviews-tab" class="product-tab">Reviews</button>
+
+                <div id="specs-panel" class="product-panel">
+                    <p>Weight: <span id="product-weight"></span></p>
+                    <p>Dimensions: <span id="product-dimensions"></span></p>
+                    <p>Warranty: <span id="product-warranty"></span></p>
+                    <p>Shipping: <span id="product-shipping"></span></p>
+                    <p>Return Policy: <span id="product-return-policy"></span></p>
+                </div>
+
+                <ul id="reviews-panel" class="product-panel hidden max-h-48 overflow-y-auto"></ul>
+            </section>
+
             <section id="related">
                 <h2>Related Products</h2>
-                <ul id="related-list"></ul>
+                <ul id="related-list" class="grid grid-cols-2 md:grid-cols-5 gap-4"></ul>
             </section>
+
         </article>
 
         <article id="cart">
             <h1>Shopping Cart</h1>
             <p id="cart-empty">Your cart is empty.</p>
             <table id="cart-table">
-                <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items"></tbody>
             </table>
 
             <section id="shipping">
                 <h2>Shipping</h2>
-                <label for="shipping-select">Method</label>
+                <label for="shipping-select" class="disabled:opacity-50">Method</label>
                 <select id="shipping-select">
                     <option value="standard">Standard</option>
                     <option value="express">Express</option>
                     <option value="priority">Priority</option>
                 </select>
-                <label for="destination-select">Destination</label>
+                
+                <label for="destination-select" class="disabled:opacity-50">Destination</label>
                 <select id="destination-select">
                     <option value="canada">Canada</option>
                     <option value="usa">United States</option>
@@ -141,7 +184,7 @@
                 <p>Shipping<span id="summary-shipping"></span></p>
                 <p>Tax<span id="summary-tax"></span></p>
                 <p>Total<span id="summary-total"></span></p>
-                <button id="checkout-button">Checkout</button>
+                <button id="checkout-button" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Checkout</button>
             </section>
         </article>
 
@@ -163,7 +206,13 @@
         <a href="https://github.com/apollo5479/COMP3612-Assignment2">GitHub Repo</a>
     </dialog>
 
-    <div id="toast-msg"></div>
+    <!-- used for opening the main img in full size from the single product view -->
+    <dialog id="image-dialog">
+        <button id="image-close-button">X</button>
+        <img id="image-dialog-img" alt="">
+    </dialog>
+
+    <div id="toast-msg" class="hidden fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded"></div>
 
 </body>
 </html>

@@ -1,6 +1,8 @@
 import { getProducts } from "./data.js";
-import { toastTimedMessage, ratingToStars, buildProductCard} from "./helpers.js";
 import { handleBrowseInit } from "./browse.js";
+import { displaySingleProduct, initSingleProductView } from "./product.js";
+import { addToCart, initCart } from "./cart.js";
+import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -11,18 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
     handleBrowseInit(products);
     handleNavigation();
     handleAboutDialog();
+    initSingleProductView();
+    handleProductCards();
+    initCart();
 
-    buildProductCard(products[0]);
+    // temp: only for testing until we have product cards on Home
+    openSingleProduct(products[67]);
+
 });
-
-export function hideContainersButOne(containerToShow) {
-    const containers = document.querySelectorAll("article");
-    for (let container of containers) {
-        container.style.display = "none";
-    }
-
-    containerToShow.style.display = "block";
-}
 
 function openHomePage() {
     hideContainersButOne(document.querySelector("#home"));
@@ -57,5 +55,36 @@ function handleAboutDialog() {
 
     document.querySelector("#about-close-button").addEventListener("click", () => {
         aboutDialog.close();
+    });
+}
+
+// fills the single product view and switches to it
+function openSingleProduct(product) {
+    displaySingleProduct(product);
+    hideContainersButOne(document.querySelector("#single-product"));
+}
+
+// handles the clicks on any product card
+function handleProductCards() {
+
+    document.querySelector("main").addEventListener("click", (e) => {
+        const isProductLink = e.target.classList.contains("product-link");  // the card img or title
+        const isAddToCart = e.target.classList.contains("add-to-cart");     // the add to cart button
+
+        if (!(isProductLink || isAddToCart)) {
+            return;
+        }
+
+
+        const card = e.target.parentNode;       // the cards li which holds the product id
+        const id = Number(card.dataset.id);
+        const product = getProducts().find(p => p.id === id);
+
+        if (isProductLink) {
+            openSingleProduct(product);
+        } else {
+            addToCart(product, 1);
+            toastTimedMessage(`1x ${product.title} added to cart.`);
+        }
     });
 }
