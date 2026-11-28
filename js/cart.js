@@ -238,6 +238,7 @@ function displaySummary() {
     document.querySelector("#summary-merchandise").textContent = formatPrice(merchandiseTotal);
     document.querySelector("#summary-shipping").textContent = formatPrice(shippingCost);
     document.querySelector("#summary-tax").textContent = formatPrice(tax);
+    document.querySelector("#tax-rate").classList.toggle("hidden", destination !== "canada");
     document.querySelector("#summary-total").textContent = formatPrice(merchandiseTotal + shippingCost + tax);
     
 }
