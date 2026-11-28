@@ -1,6 +1,7 @@
 import { getProducts } from "./data.js";
 import { formatPrice, formatCategory, ratingToStars, toastTimedMessage, formatDate, addTextElement, buildProductCard } from "./helpers.js";
 import { addToCart } from "./cart.js";
+import { browseByCategory } from "./browse.js";
 
 
 // ================================================================ Functions Used In Other Files ================================================================
@@ -10,12 +11,14 @@ export function initSingleProductView() {
     handleImageDialog();
     handleAddToCart();
     handleTabs();
+    handleBreadcrumb();
 }
 
 // main function for displaying a single product
 export function displaySingleProduct(product) {
 
     document.querySelector("#breadcrumb-category").textContent = formatCategory(product.category);
+    document.querySelector("#breadcrumb-category").dataset.category = product.category;     // so the link knows which category to open
     document.querySelector("#breadcrumb-title").textContent = product.title;
 
 
@@ -149,6 +152,16 @@ function handleAddToCart() {
 
         addToCart(product, quantity);
         toastTimedMessage(`${quantity}x ${product.title} added to cart.`);
+    });
+}
+
+// opens browse filtered to the product's category when the breadcrumb category is clicked
+function handleBreadcrumb() {
+    const categoryLink = document.querySelector("#breadcrumb-category");
+
+    categoryLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        browseByCategory(getProducts(), categoryLink.dataset.category);
     });
 }
 

@@ -150,7 +150,7 @@ function clearAllFilters(products) {
     document.querySelector("#name-filter").value = "";
     document.querySelector("#price-filter").value = "";
     document.querySelector("#rating-filter").value = "0";
-    document.querySelector("#over-under").value = "Over";
+    document.querySelector("#over-under").value = "over";
 
     const categories = document.querySelectorAll("#category-filters input[type='checkbox']");
     for (const category of categories) {
