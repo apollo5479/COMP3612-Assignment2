@@ -1,8 +1,8 @@
 import { browseByCategory } from "./browse.js";
 import { openHomePage } from "./main.js";
 
-// ill implement this to add category filters from the products data
-function getCategories(products) { // not done
+// add category filters from the products data
+function getCategories(products) {
     let categories = [];
 
     for (let product of products) {
@@ -14,6 +14,7 @@ function getCategories(products) { // not done
     return categories;
 }
 
+// helper for browse.js to list the categories
 export function loadCategories(products) {
     const container = document.querySelector("#category-filters");
     const categories = getCategories(products);
@@ -71,6 +72,7 @@ function setCategoryThumbnail(category, products) {
         title.textContent = "Home Page";
     }
 
+    // i used ChatGPT for getting relevant Tailwind CSS classes to use for overlaying text on top of the thumbnails
     li.className = "relative overflow-hidden rounded-lg cursor-pointer border border-gray-200 rounded-xl hover:bg-gray-500/25 transition-colors duration-200";
     img.className = "w-full h-64 object-contain";
     title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white capitalize [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";
@@ -91,6 +93,7 @@ function setCategoryThumbnail(category, products) {
 // border border-gray-200 rounded-xl
 // .className = "rounded-lg p-2 hover:bg-gray-500/25 transition-colors duration-200"
 
+// to be used in DOMContentLoaded
 export function handleCategoryInit(products) {
     const categories = getCategories(products);
     displayCategoryHero();

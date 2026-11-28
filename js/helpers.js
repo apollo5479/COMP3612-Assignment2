@@ -1,3 +1,4 @@
+// toast message pops up bottom right of the screen for 3 seconds
 export function toastTimedMessage(message) {
     const toast = document.querySelector("#toast-msg");
     toast.textContent = message;
@@ -7,6 +8,8 @@ export function toastTimedMessage(message) {
     }, 3000);
 }
 
+// hide other containers to only show one view
+// used as: hideContainersButOne(document.querySelector("#home"));
 export function hideContainersButOne(containerToShow) {
     const containers = document.querySelectorAll("article");
     for (let container of containers) {
@@ -16,6 +19,7 @@ export function hideContainersButOne(containerToShow) {
     containerToShow.classList.remove("hidden");
 }
 
+// converts ratings in # into string of stars
 export function ratingToStars(rating) {
     const fullStars = Math.round(rating);
     let stars = "";
@@ -56,6 +60,7 @@ export function buildProductCard(product) {
     return card;
 }
 
+// ensures product price is only 2 decimal places and returned as a strijng
 export function formatPrice(price) {
     return `$${price.toFixed(2)}`;
 }

@@ -6,6 +6,7 @@ import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
 import { handleCategoryInit } from "./category.js";
 import { handleHomeInit } from "./home.js";
 
+// site only loads after content loaded
 document.addEventListener("DOMContentLoaded", () => {
     openHomePage();
     
@@ -22,11 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// helper for opening to Home page
 export function openHomePage() {
     hideContainersButOne(document.querySelector("#home"));
 }
 
-
+// to be used inside DOMContentLoaded
+// Nav dialog interactions
 function handleNavigation() {
     document.querySelector("body").addEventListener("click", (e) => {
         let link;
@@ -44,7 +47,8 @@ function handleNavigation() {
     });
 }
 
-
+// to be used inside DOMContentLoaded
+// About dialog interactions
 function handleAboutDialog() {
     const aboutDialog = document.querySelector("#about");
 

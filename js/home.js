@@ -18,6 +18,7 @@ function displayHomeHero(products) {
 }
 
 
+// to be used in DOMContentLoaded in main.js
 export function handleHomeInit(products) {
     displayHomeHero(products);
     displayFeaturedProducts(products);
