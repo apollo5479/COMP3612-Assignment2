@@ -39,8 +39,10 @@ function displayCategoryHero(products) {
     const hero = document.querySelector("#category-hero");
     const h1 = hero.querySelector("h1");
 
-    hero.className = "relative h-96 bg-blue-400 rounded-lg";
-    h1.className = "absolute inset-0 flex items-center " + "justify-center text-4xl font-bold " + "text-white text-center";
+    hero.className =
+        "bg-[url('./imgs/campus2.png')] bg-cover bg-center bg-no-repeat h-96 rounded-lg " + "flex flex-col items-center justify-center " + "text-white text-center gap-4";
+
+    h1.className = "text-4xl font-bold drop-shadow-lg";
 }
 
 // each category will have thumbnail taken from one of its products
