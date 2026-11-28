@@ -17,6 +17,16 @@ export function hideContainersButOne(containerToShow) {
     }
 
     containerToShow.classList.remove("hidden");
+    highlightHeaderLink(containerToShow.id);
+}
+
+// adds a background in the header for the view that is being shown so we can see which page we are on
+function highlightHeaderLink(viewId) {
+    for (let link of document.querySelectorAll(".header-link")) {
+        const isCurrent = link.getAttribute("href") === `#${viewId}`;
+        link.classList.toggle("bg-gray-100", isCurrent);
+        link.classList.toggle("text-black", isCurrent);
+    }
 }
 
 // converts ratings in # into string of stars
@@ -39,23 +49,22 @@ export function ratingToStars(rating) {
 export function buildProductCard(product) {
     const card = document.createElement("li");
     card.dataset.id = product.id;
-    card.classList.add("border", "rounded", "p-2"); // TODO: styling on the card
+    card.className = "flex flex-col gap-1 bg-white rounded-xl p-3 hover:shadow-lg transition-shadow duration-200";
 
     const thumbnail = document.createElement("img");
     thumbnail.src = product.thumbnail;
     thumbnail.alt = product.title;
-    thumbnail.classList.add("product-link", "cursor-pointer", "mx-auto", "w-full", "border-b", "border-gray-200", "mb-2");   // clicking opens the product
+    thumbnail.className = "product-link cursor-pointer w-full h-48 object-contain border-b border-gray-200 mb-2";   // clicking opens the product
     card.appendChild(thumbnail);
 
     const title = addTextElement(card, "h3", product.title);
-    title.classList.add("product-link", "cursor-pointer", "font-bold");
-    
+    title.className = "product-link cursor-pointer font-bold hover:underline line-clamp-2 min-h-12";
+
     addTextElement(card, "p", `${ratingToStars(product.rating)} ${product.rating.toFixed(1)}`);
     addTextElement(card, "p", formatPrice(product.price));
 
     const button = addTextElement(card, "button", "Add to Cart");
-    button.className = "add-to-cart border border-solid border-black hover:bg-black hover:text-white rounded-lg px-2 py-1  transition-colors duration-200";
-    card.className = "border border-gray-200 rounded-xl m-3 hover:bg-gray-500/25 rounded-lg transition-colors duration-200 p-2 hover:underline";
+    button.className = "add-to-cart mt-auto self-start border border-black rounded-lg px-2 py-1 hover:bg-black hover:text-white transition-colors duration-200";
 
     return card;
 }

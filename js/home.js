@@ -28,8 +28,8 @@ export function handleHomeInit(products) {
 function displayFeaturedProducts(products) {
     const featuredList = document.querySelector("#featured-list");
     const topList = document.querySelector("#top-list");
-    featuredList.className = "grid grid-cols-1 md:grid-cols-4 gap-16 m-8 border border-gray-200 rounded-xl items-center justify-center";
-    topList.className = "grid grid-cols-1 md:grid-cols-6 gap-8 m-8 border border-gray-200 rounded-xl items-center justify-center"; 
+    featuredList.className = "grid grid-cols-1 md:grid-cols-4 gap-8 mx-8 p-8 bg-gray-100 rounded-xl";
+    topList.className = "grid grid-cols-1 md:grid-cols-6 gap-6 mx-8 p-6 bg-gray-100 rounded-xl";
 
     // shallow copy then sort by rating. track first 3 products and next 15 products
     const topProducts = [...products].sort((a, b) => b.rating - a.rating);

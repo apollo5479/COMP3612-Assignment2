@@ -51,7 +51,7 @@ function displayTags(tags) {
 
     for (let tag of tags) {
         const item = addTextElement(tagList, "li", tag);
-        item.classList.add("rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill. We can style more later
+        item.classList.add("rounded-full", "bg-black", "px-3", "py-1", "text-sm", "font-medium", "text-white"); // displays the tags as pill.
     }
 }
 
@@ -76,15 +76,15 @@ function displayReviews(reviews) {
 
     for (let review of reviews) {
         const item = document.createElement("li");
-        item.classList.add("border-b", "py-2"); // TODO: styling
+        item.classList.add("border-b", "py-2");
 
         const name = addTextElement(item, "p", review.reviewerName);
-        name.classList.add("font-bold"); // TODO: styling
+        name.classList.add("font-bold"); 
 
         addTextElement(item, "p", ratingToStars(review.rating));
 
         const date = addTextElement(item, "p", formatDate(review.date));
-        date.classList.add("text-sm", "text-gray-500") // TODO: styling
+        date.classList.add("text-sm", "text-gray-500") 
 
         addTextElement(item, "p", review.comment);
         reviewList.appendChild(item);

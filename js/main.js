@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // helper for opening to Home page
-export function openHomePage() {
+function openHomePage() {
     hideContainersButOne(document.querySelector("#home"));
 }
 

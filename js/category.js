@@ -1,5 +1,5 @@
 import { browseByCategory } from "./browse.js";
-import { openHomePage } from "./main.js";
+import { formatCategory, hideContainersButOne } from "./helpers.js";
 
 // add category filters from the products data
 function getCategories(products) {
@@ -32,8 +32,7 @@ export function loadCategories(products) {
         checkbox.value = category;
         checkbox.className = "category-checkbox";
         const categoryName = document.createElement("span");
-        categoryName.textContent = category;
-        categoryName.className = "capitalize";
+        categoryName.textContent = formatCategory(category);
 
         label.appendChild(checkbox);
         label.appendChild(categoryName);
@@ -57,13 +56,13 @@ function setCategoryThumbnail(category, products) {
     const img = document.createElement("img");
     
     const title = document.createElement("h3");
-    title.textContent = `${category}`;
 
     const product = products.find(product =>
         product.category == category
     );
 
     if (product) {
+        title.textContent = formatCategory(category);
         img.src = product.thumbnail;
         img.alt = `Category thumbnail for: ${category}`;
     } else {
@@ -76,14 +75,14 @@ function setCategoryThumbnail(category, products) {
     // "What are some of the relevant Tailwind CSS classes for overlaying text on top of an img?"
     li.className = "relative overflow-hidden rounded-lg cursor-pointer border border-gray-200 rounded-xl hover:bg-gray-500/25 transition-colors duration-200";
     img.className = "w-full h-64 object-contain";
-    title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white capitalize [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";
+    title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";
     if (category != null) {    
         li.addEventListener("click", () => { // clicking a category will open Browse with that category already selected as its filter
             browseByCategory(products, category);
         });
     } else {
         li.addEventListener("click", () => {
-            openHomePage();
+            hideContainersButOne(document.querySelector("#home"));
         });
     }
 

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Note: we wrote the HTML structure for the page ourselves and the TailwindCSS classes for the header, footer, single product view, cart, about dialog, image dialog, and toast message 
+        were generated with Claude and then adjusted by us (like  the colors, padding, and spacing). In the course outline it says AI-generated CSS is allowed for the second assignment 
+        so we went with that. -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMP 3612 Assignment 2</title>
@@ -15,11 +19,11 @@
         <div class="px-16 py-4 flex justify-between items-center">
             <a href="#home" class="logo nav-link text-2xl font-bold hover:underline">COMP 3612 Assignment 2</a>
 
-            <nav class="flex items-center gap-6 text-gray-600">
-                <a href="#home" class="nav-link hover:text-black">Home</a>
-                <a href="#browse" class="nav-link hover:text-black">Browse</a>
-                <a href="#category" class="nav-link hover:text-black">Category</a>
-                <a href="#" id="about-link" class="hover:text-black">About</a>
+            <nav class="flex items-center gap-2 text-gray-600">
+                <a href="#home" class="nav-link header-link px-3 py-2 rounded-lg hover:text-black">Home</a>
+                <a href="#browse" class="nav-link header-link px-3 py-2 rounded-lg hover:text-black">Browse</a>
+                <a href="#category" class="nav-link header-link px-3 py-2 rounded-lg hover:text-black">Category</a>
+                <a href="#" id="about-link" class="px-3 py-2 rounded-lg hover:text-black">About</a>
                 <a href="#cart" class="nav-link bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">Cart (<span id="cart-count">0</span>)</a>
             </nav>
         </div>
@@ -34,16 +38,16 @@
 
         <article id="home">
             <section id="hero">
-                <h1 class="">TBD Hero</h1>
-                <p>TBD tagline</p>
+                <h1 class=""></h1>
+                <p></p>
                 <a href="#browse" class="button nav-link">Shop Now</a>
             </section>
             <section id="featured">
-                <h2 class="px-8 py-8 text-3xl font-bold mb-6 pb-3 border-b border-gray-200">Featured Products</h2>
+                <h2 class="px-8 pt-12 pb-4 text-3xl font-bold">Featured Products</h2>
                 <ul id="featured-list"></ul>
             </section>
             <section id="top-products">
-                <h2 class="px-8 py-8 text-3xl font-bold mb-6 pb-3 border-b border-gray-200">Top Products</h2>
+                <h2 class="px-8 pt-12 pb-4 text-3xl font-bold">Top Products</h2>
                 <ul id="top-list"></ul>
             </section>
         </article>
@@ -57,9 +61,9 @@
         </article>
 
         <article id="browse">
-            <h1 class="px-8 py-4 text-6xl font-bold mb-6 pb-3 border-b border-gray-200">Browse</h1>
-            <div class="flex flex-col lg:flex-row gap-8 items-start">
-                <section id="filter" class="sticky top-20 w-full lg:w-64 shrink-0 border border-gray-200 rounded-xl ml-4 p-5 shadow-sm bg-white">
+            <h1 class="px-16 py-4 text-6xl font-bold mb-6 pb-3 border-b border-gray-200">Browse</h1>
+            <div class="flex flex-col lg:flex-row gap-8 items-start px-16">
+                <section id="filter" class="sticky top-20 w-full lg:w-64 shrink-0 border border-gray-200 rounded-xl p-5 shadow-sm bg-white">
                     <h2 class="text-3xl font-bold">Filters</h2>
 
                     <div class="py-2">
@@ -106,18 +110,18 @@
                     </div>
                 </section>
             
-                <section id="results" class="border border-gray-200 rounded-xl">
+                <section id="results" class="flex-1 bg-gray-100 rounded-xl p-6">
                     <div id="current-filters"></div>
-                    <div class="pl-7 pt-2">
-                        <label for="sort-select">Sort</label>
-                        <select id="sort-select">
+                    <div class="flex items-center gap-2 mb-4">
+                        <label for="sort-select" class="font-medium">Sort</label>
+                        <select id="sort-select" class="bg-white border border-gray-200 rounded-lg px-3 py-1 cursor-pointer">
                             <option value="name">Product Name</option>
                             <option value="price">Price</option>
                             <option value="category">Category</option>
                         </select>
                     </div>
-                    <p id="no-matches">No products match your filters.</p>
-                    <ul id="results-list" class="grid grid-cols-6 gap-6 p-6"></ul>
+                    <p id="no-matches" class="text-gray-500 text-center py-10">No products match your filters.</p>
+                    <ul id="results-list" class="grid grid-cols-6 gap-6"></ul>
                 </section>
             </div>
         </article>
@@ -251,14 +255,16 @@
         <h2 class="text-2xl font-bold mb-4">About</h2>
 
         <div class="flex flex-col gap-4 text-gray-700">
-            <p>TBD about section.</p>
+            <p>COMP3612 Assignment 2 began with a simple belief: that every programmer deserves products that not only look exceptional but perform just as well. 
+                Founded in 2026 by Abdul Mohammad &amp; Paolo Deocareza, our company emerged from a shared frustration with the compromise between quality and affordability when shopping, 
+                as well as a strong desire to get an A grade in COMP3612.</p>   <!--This is copied from the assignment 1 about section-->
 
             <div>
                 <h3 class="font-semibold text-black">Technologies</h3>
                 <ul class="list-disc list-inside">
                     <li>Tailwind</li>
                     <li>ChatGPT</li>
-                    <li>Claude Code</li>
+                    <li>Claude</li>
                     <li>Visual Studio Code</li>
                     <li>GitHub</li>
                 </ul>
