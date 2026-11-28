@@ -73,6 +73,7 @@ function setCategoryThumbnail(category, products) {
     }
 
     // i used ChatGPT for getting relevant Tailwind CSS classes to use for overlaying text on top of the thumbnails
+    // "What are some of the relevant Tailwind CSS classes for overlaying text on top of an img?"
     li.className = "relative overflow-hidden rounded-lg cursor-pointer border border-gray-200 rounded-xl hover:bg-gray-500/25 transition-colors duration-200";
     img.className = "w-full h-64 object-contain";
     title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white capitalize [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";

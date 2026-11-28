@@ -44,7 +44,7 @@ export function buildProductCard(product) {
     const thumbnail = document.createElement("img");
     thumbnail.src = product.thumbnail;
     thumbnail.alt = product.title;
-    thumbnail.classList.add("product-link", "cursor-pointer", "mx-auto", "w-full");   // clicking opens the product
+    thumbnail.classList.add("product-link", "cursor-pointer", "mx-auto", "w-full", "border-b", "border-gray-200", "mb-2");   // clicking opens the product
     card.appendChild(thumbnail);
 
     const title = addTextElement(card, "h3", product.title);
@@ -55,7 +55,7 @@ export function buildProductCard(product) {
 
     const button = addTextElement(card, "button", "Add to Cart");
     button.className = "add-to-cart border border-solid border-black hover:bg-black hover:text-white rounded-lg px-2 py-1  transition-colors duration-200";
-    card.className = "hover:bg-gray-500/25 rounded-lg transition-colors duration-200 p-2"
+    card.className = "border border-gray-200 rounded-xl m-3 hover:bg-gray-500/25 rounded-lg transition-colors duration-200 p-2 hover:underline";
 
     return card;
 }

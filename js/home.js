@@ -11,7 +11,7 @@ function displayHomeHero(products) {
     h1.textContent = "COMP3612 Assignment 2 Shop";
     p.textContent = "We offer the best deals only!";
 
-    hero.className = "bg-[url('./imgs/campus1.png')] bg-cover bg-center bg-no-repeat h-96 rounded-lg " + "flex flex-col items-center justify-center " + "text-white text-center gap-4";
+    hero.className = "bg-[url('./imgs/campus1.png')] bg-cover bg-center bg-no-repeat h-screen rounded-lg " + "flex flex-col items-center justify-center " + "text-white text-center gap-4";
     h1.className = "text-5xl font-bold [text-shadow:3px_3px_6px_black]";
     p.className = "text-xl [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";
     a.className = "button nav-link bg-white text-black " + "px-6 py-3 rounded-lg font-semibold " + "hover:bg-gray-200";
