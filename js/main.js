@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-function openHomePage() {
+export function openHomePage() {
     hideContainersButOne(document.querySelector("#home"));
 }
 

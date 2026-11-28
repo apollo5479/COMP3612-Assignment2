@@ -158,7 +158,7 @@ function clearAllFilters(products) {
     }
 
     // update the displayed filters and products
-    document.querySelector("#current-filters").replaceChildren();
+    // document.querySelector("#current-filters").replaceChildren();
     applyFilters(products);
 }
 
