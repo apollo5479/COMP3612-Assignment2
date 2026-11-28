@@ -6,8 +6,8 @@ import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
 import { handleCategoryInit } from "./category.js";
 import { handleHomeInit } from "./home.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    const products = getProducts();
+document.addEventListener("DOMContentLoaded", async () => {
+    const products = await getProducts();
 
     console.log(products);
 
