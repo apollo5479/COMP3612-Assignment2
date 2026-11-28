@@ -35,6 +35,10 @@
                 <h2>Featured Products</h2>
                 <ul id="featured-list"></ul>
             </section>
+            <section id="top-products">
+                <h2>Top Products</h2>
+                <ul id="top-list"></ul>
+            </section>
         </article>
 
 
@@ -42,58 +46,60 @@
             <section id="category-hero">
                 <h1>Categories</h1>
             </section>
-            <ul id="category-list"></ul>
+            <ul id="category-list" class="grid grid-cols-3 gap-6 p-6"></ul>
         </article>
 
         <article id="browse">
             <h1>Browse</h1>
-            <section id="filter">
-                <h2>Filters</h2>
-                <label for="name-filter">Product Name</label>
-                <input type="search" id="name-filter"
-                    placeholder="Search products...">
+            <div class="flex flex-col lg:flex-row gap-8 items-start">
+                <section id="filter" class="w-full lg:w-64 shrink-0 border border-gray-200 rounded-xl p-5 shadow-sm bg-white">
+                    <h2>Filters</h2>
+                    <label for="name-filter">Product Name</label>
+                    <input type="search" id="name-filter"
+                        placeholder="Search products...">
 
-                <label for="price-filter">Price</label>
-                <input type="number" id="price-filter" min="0">
-                <label for="over-under">Over or Under</label>
-                <select id="over-under">
-                    <option value="over">Over</option>
-                    <option value="under">Under</option>
-                </select>
+                    <label for="price-filter">Price</label>
+                    <input type="number" id="price-filter" min="0">
+                    <label for="over-under">Over or Under</label>
+                    <select id="over-under">
+                        <option value="over">Over</option>
+                        <option value="under">Under</option>
+                    </select>
 
-                <h3>Categories</h3>
-                <div id="category-filters"></div>
+                    <h3>Categories</h3>
+                    <div id="category-filters"></div>
 
-                <label for="rating-filter">Minimum Rating</label>
-                <select id="rating-filter">
-                    <option value="0">Any Rating</option>
-                    <option value="1">1 Star and Above</option>
-                    <option value="2">2 Stars and Above</option>
-                    <option value="3">3 Stars and Above</option>
-                    <option value="4">4 Stars and Above</option>
-                    <option value="5">5 Stars</option>
-                </select>
+                    <label for="rating-filter">Minimum Rating</label>
+                    <select id="rating-filter">
+                        <option value="0">Any Rating</option>
+                        <option value="1">1 Star and Above</option>
+                        <option value="2">2 Stars and Above</option>
+                        <option value="3">3 Stars and Above</option>
+                        <option value="4">4 Stars and Above</option>
+                        <option value="5">5 Stars</option>
+                    </select>
 
-                <button type="button" id="apply-filters">
-                    Apply Filters
-                </button>
+                    <button type="button" id="apply-filters">
+                        Apply Filters
+                    </button>
 
-                <button type="button" id="clear-filters">
-                    Clear All Filters
-                </button>
-            </section>
-
-            <section id="results">
-                <div id="current-filters"></div>
-                <label for="sort-select">Sort</label>
-                <select id="sort-select">
-                    <option value="name">Product Name</option>
-                    <option value="price">Price</option>
-                    <option value="category">Category</option>
-                </select>
-                <p id="no-matches">No products match your filters.</p>
-                <ul id="results-list"></ul>
-            </section>
+                    <button type="button" id="clear-filters">
+                        Clear All Filters
+                    </button>
+                </section>
+            
+                <section id="results">
+                    <div id="current-filters"></div>
+                    <label for="sort-select">Sort</label>
+                    <select id="sort-select">
+                        <option value="name">Product Name</option>
+                        <option value="price">Price</option>
+                        <option value="category">Category</option>
+                    </select>
+                    <p id="no-matches">No products match your filters.</p>
+                    <ul id="results-list"></ul>
+                </section>
+            </div>
         </article>
 
         <article id="single-product">
