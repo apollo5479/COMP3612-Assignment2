@@ -1,4 +1,4 @@
-import { getProducts } from "./data.js";
+import { getProducts, loadProducts } from "./data.js";
 import { handleBrowseInit } from "./browse.js";
 import { displaySingleProduct, initSingleProductView } from "./product.js";
 import { addToCart, initCart } from "./cart.js";
@@ -7,22 +7,18 @@ import { handleCategoryInit } from "./category.js";
 import { handleHomeInit } from "./home.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    const products = getProducts();
-
-    console.log(products);
-
     openHomePage();
-    handleBrowseInit(products);
-    handleCategoryInit(products);
-    handleHomeInit(products);
-    handleNavigation();
-    handleAboutDialog();
-    initSingleProductView();
-    handleProductCards();
-    initCart();
-
-    // temp: only for testing until we have product cards on Home
-    //openSingleProduct(products[67]);
+    
+    loadProducts().then(products => {
+        handleBrowseInit(products);
+        handleCategoryInit(products);
+        handleHomeInit(products);
+        handleNavigation();
+        handleAboutDialog();
+        initSingleProductView();
+        handleProductCards();
+        initCart();
+    });
 
 });
 
