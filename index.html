@@ -34,16 +34,16 @@
 
         <article id="home">
             <section id="hero">
-                <h1>TBD Hero</h1>
+                <h1 class="">TBD Hero</h1>
                 <p>TBD tagline</p>
                 <a href="#browse" class="button nav-link">Shop Now</a>
             </section>
             <section id="featured">
-                <h2>Featured Products</h2>
+                <h2 class="px-8 py-8 text-3xl font-bold mb-6 pb-3 border-b border-gray-200">Featured Products</h2>
                 <ul id="featured-list"></ul>
             </section>
             <section id="top-products">
-                <h2>Top Products</h2>
+                <h2 class="px-8 py-8 text-3xl font-bold mb-6 pb-3 border-b border-gray-200">Top Products</h2>
                 <ul id="top-list"></ul>
             </section>
         </article>
@@ -53,58 +53,71 @@
             <section id="category-hero">
                 <h1>Categories</h1>
             </section>
-            <ul id="category-list" class="grid grid-cols-3 gap-6 p-6"></ul>
+            <ul id="category-list" class="grid grid-cols-4 gap-6 p-6"></ul>
         </article>
 
         <article id="browse">
-            <h1>Browse</h1>
+            <h1 class="px-8 py-4 text-6xl font-bold mb-6 pb-3 border-b border-gray-200">Browse</h1>
             <div class="flex flex-col lg:flex-row gap-8 items-start">
-                <section id="filter" class="w-full lg:w-64 shrink-0 border border-gray-200 rounded-xl p-5 shadow-sm bg-white">
-                    <h2>Filters</h2>
-                    <label for="name-filter">Product Name</label>
-                    <input type="search" id="name-filter"
-                        placeholder="Search products...">
+                <section id="filter" class="w-full lg:w-64 shrink-0 border border-gray-200 rounded-xl ml-4 p-5 shadow-sm bg-white">
+                    <h2 class="text-3xl font-bold">Filters</h2>
 
-                    <label for="price-filter">Price</label>
-                    <input type="number" id="price-filter" min="0">
-                    <label for="over-under">Over or Under</label>
-                    <select id="over-under">
-                        <option value="over">Over</option>
-                        <option value="under">Under</option>
-                    </select>
+                    <div class="py-2">
+                    <label for="name-filter" class="text-sm font-bold">Product Name</label>
+                        <input type="search" id="name-filter" placeholder="Search products...">
+                    </div>
 
-                    <h3>Categories</h3>
-                    <div id="category-filters"></div>
+                    <div class="py-2">
+                        <label for="price-filter" class="text-sm font-bold">Price</label>
+                        <div class="grid grid-cols-2">
+                            <select id="over-under" class="cursor-pointer">
+                                <option value="over">Over</option>
+                                <option value="under">Under</option>
+                            </select>
+                            <input type="number" id="price-filter" class="px-2" placeholder="0" min="0">
+                        </div>
+                        <label for="over-under"></label>
+                    </div>
 
-                    <label for="rating-filter">Minimum Rating</label>
-                    <select id="rating-filter">
-                        <option value="0">Any Rating</option>
-                        <option value="1">1 Star and Above</option>
-                        <option value="2">2 Stars and Above</option>
-                        <option value="3">3 Stars and Above</option>
-                        <option value="4">4 Stars and Above</option>
-                        <option value="5">5 Stars</option>
-                    </select>
+                    <div class="py-2">
+                        <label for="rating-filter" class="text-sm font-bold">Minimum Rating</label>
+                        <select id="rating-filter" class="cursor-pointer">
+                            <option value="0">Any Rating</option>
+                            <option value="1">1 Star and Above</option>
+                            <option value="2">2 Stars and Above</option>
+                            <option value="3">3 Stars and Above</option>
+                            <option value="4">4 Stars and Above</option>
+                            <option value="5">5 Stars</option>
+                        </select>
+                    </div>
 
-                    <button type="button" id="apply-filters">
-                        Apply Filters
-                    </button>
+                    <div class="py-2">
+                        <h3 class="text-sm font-bold">Categories</h3>
+                        <div id="category-filters"></div>
+                    </div>
 
-                    <button type="button" id="clear-filters">
-                        Clear All Filters
-                    </button>
+                    <div class="grid grid-cols-2 py-2 gap-1">
+                        <button type="button" id="apply-filters" class="border border-solid border-black hover:bg-black hover:text-white rounded-lg px-2 py-1  transition-colors duration-200">
+                            Apply Filters
+                        </button>
+                        <button type="button" id="clear-filters" class="border border-solid border-black hover:bg-black hover:text-white rounded-lg px-2 py-1  transition-colors duration-200">
+                            Clear All
+                        </button>
+                    </div>
                 </section>
             
-                <section id="results">
+                <section id="results" class="border border-gray-200 rounded-xl">
                     <div id="current-filters"></div>
-                    <label for="sort-select">Sort</label>
-                    <select id="sort-select">
-                        <option value="name">Product Name</option>
-                        <option value="price">Price</option>
-                        <option value="category">Category</option>
-                    </select>
+                    <div class="pl-7 pt-2">
+                        <label for="sort-select">Sort</label>
+                        <select id="sort-select">
+                            <option value="name">Product Name</option>
+                            <option value="price">Price</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </div>
                     <p id="no-matches">No products match your filters.</p>
-                    <ul id="results-list"></ul>
+                    <ul id="results-list" class="grid grid-cols-6 gap-6 p-6"></ul>
                 </section>
             </div>
         </article>

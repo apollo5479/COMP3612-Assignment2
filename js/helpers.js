@@ -40,7 +40,7 @@ export function buildProductCard(product) {
     const thumbnail = document.createElement("img");
     thumbnail.src = product.thumbnail;
     thumbnail.alt = product.title;
-    thumbnail.classList.add("product-link", "cursor-pointer");   // clicking opens the product
+    thumbnail.classList.add("product-link", "cursor-pointer", "mx-auto", "w-full");   // clicking opens the product
     card.appendChild(thumbnail);
 
     const title = addTextElement(card, "h3", product.title);
@@ -50,7 +50,8 @@ export function buildProductCard(product) {
     addTextElement(card, "p", formatPrice(product.price));
 
     const button = addTextElement(card, "button", "Add to Cart");
-    button.classList.add("add-to-cart");
+    button.className = "add-to-cart border border-solid border-black hover:bg-black hover:text-white rounded-lg px-2 py-1  transition-colors duration-200";
+    card.className = "hover:bg-gray-500/25 rounded-lg transition-colors duration-200 p-2"
 
     return card;
 }

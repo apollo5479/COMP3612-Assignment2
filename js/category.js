@@ -1,4 +1,5 @@
-import { browseByCategory } from "./browse.js"
+import { browseByCategory } from "./browse.js";
+import { openHomePage } from "./main.js";
 
 // ill implement this to add category filters from the products data
 function getCategories(products) { // not done
@@ -16,13 +17,12 @@ function getCategories(products) { // not done
 export function loadCategories(products) {
     const container = document.querySelector("#category-filters");
     const categories = getCategories(products);
+    container.className = "flex flex-col gap-2";
 
     for (let category of categories) {
         // name for categories
         const label = document.createElement("label");
-        label.textContent = category;
-        label.htmlFor = category;
-        container.appendChild(label);
+        label.className = "flex items-center gap-2 cursor-pointer hover:bg-gray-500/25 rounded-lg transition-colors duration-200 pl-1";
 
         // the actual checkboxes
         const checkbox = document.createElement("input");
@@ -30,19 +30,23 @@ export function loadCategories(products) {
         checkbox.id = category;
         checkbox.value = category;
         checkbox.className = "category-checkbox";
-        container.appendChild(checkbox);
+        const categoryName = document.createElement("span");
+        categoryName.textContent = category;
+        categoryName.className = "capitalize";
+
+        label.appendChild(checkbox);
+        label.appendChild(categoryName);
+        container.appendChild(label);
     }
 }
 
 // hero image and title for the category page
-function displayCategoryHero(products) {
+function displayCategoryHero() {
     const hero = document.querySelector("#category-hero");
     const h1 = hero.querySelector("h1");
 
-    hero.className =
-        "bg-[url('./imgs/campus2.png')] bg-cover bg-center bg-no-repeat h-96 rounded-lg " + "flex flex-col items-center justify-center " + "text-white text-center gap-4";
-
-    h1.className = "text-4xl font-bold drop-shadow-lg";
+    hero.className = "bg-[url('./imgs/campus2.png')] bg-cover bg-center bg-no-repeat h-96 rounded-lg " + "flex flex-col items-center justify-center " + "text-white text-center gap-4";
+    h1.className = "text-4xl font-bold [text-shadow:3px_3px_6px_black]";
 }
 
 // each category will have thumbnail taken from one of its products
@@ -61,28 +65,41 @@ function setCategoryThumbnail(category, products) {
     if (product) {
         img.src = product.thumbnail;
         img.alt = `Category thumbnail for: ${category}`;
+    } else {
+        img.src = products[67].thumbnail;
+        img.alt = "Missing Category, replaced by Home Page button";
+        title.textContent = "Home Page";
     }
 
-    li.className = "relative overflow-hidden rounded-lg cursor-pointer hover:bg-gray-200";
-    img.className = "w-full h-64 object-cover";
-    title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white bg-black/40 capitalize";
-    li.addEventListener("click", () => { // clicking a category will open Browse with that category already selected as its filter
-        browseByCategory(products, category);
-    });
+    li.className = "relative overflow-hidden rounded-lg cursor-pointer border border-gray-200 rounded-xl hover:bg-gray-500/25 transition-colors duration-200";
+    img.className = "w-full h-64 object-contain";
+    title.className = "absolute inset-0 flex items-center " + "justify-center text-2xl font-bold " + "text-white capitalize [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]";
+    if (category != null) {    
+        li.addEventListener("click", () => { // clicking a category will open Browse with that category already selected as its filter
+            browseByCategory(products, category);
+        });
+    } else {
+        li.addEventListener("click", () => {
+            openHomePage();
+        });
+    }
 
     li.appendChild(img);
     li.appendChild(title);
     ul.appendChild(li);
-}
+} 
+// border border-gray-200 rounded-xl
+// .className = "rounded-lg p-2 hover:bg-gray-500/25 transition-colors duration-200"
 
 export function handleCategoryInit(products) {
     const categories = getCategories(products);
-    displayCategoryHero(products);
+    displayCategoryHero();
 
-    /*while (categories.length % 3 !== 0) {
+    /*while (categories.length % 4 !== 0) {
         categories.push(null);
     } // add on to this, but works for now
     */
+    categories.push(null);
 
     for (let category of categories) {
         setCategoryThumbnail(category, products);
