@@ -9,21 +9,24 @@
    
    <script src="js/main.js" type="module"></script>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-    <header>
-        <a href="#home" class="logo nav-link">TBD store logo</a>
-        <nav>
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#browse" class="nav-link">Browse</a>
-            <a href="#category" class="nav-link">Category</a>
-            <a href="#" id="about-link">About</a>
-            <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-        </nav>
+    <header class="sticky top-0 z-10 bg-white border-b">
+        <div class="px-8 py-4 flex justify-between items-center">
+            <a href="#home" class="logo nav-link text-2xl font-bold hover:underline">COMP 3612 Assignment 2</a>
+
+            <nav class="flex items-center gap-6 text-gray-600">
+                <a href="#home" class="nav-link hover:text-black">Home</a>
+                <a href="#browse" class="nav-link hover:text-black">Browse</a>
+                <a href="#category" class="nav-link hover:text-black">Category</a>
+                <a href="#" id="about-link" class="hover:text-black">About</a>
+                <a href="#cart" class="nav-link bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">Cart (<span id="cart-count">0</span>)</a>
+            </nav>
+        </div>
     </header>
 
     
-    <main>
+    <main class="flex-1">
         <div id="loading" class="hidden flex justify-center items-center p-10">
             <div class="w-10 h-10 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
             <p class="ml-4">Loading products...</p>
@@ -106,124 +109,164 @@
             </div>
         </article>
 
-        <article id="single-product">
-            <nav id="breadcrumb">
-                <a href="#home" class="nav-link">Home</a>
+        <article id="single-product" class="max-w-6xl mx-auto p-6">
+            <nav id="breadcrumb" class="text-sm text-gray-500 mb-6">
+                <a href="#home" class="nav-link hover:underline">Home</a>
                 <span> &gt; </span>
-                <a href="#browse" id="breadcrumb-category"></a> <!-- shows the product's category and opens browse filtered to it-->
+                <a href="#browse" id="breadcrumb-category" class="hover:underline"></a> <!-- shows the product's category and opens browse filtered to it-->
                 <span> &gt; </span>
-                <span id="breadcrumb-title"></span>
+                <span id="breadcrumb-title" class="text-gray-800"></span>
             </nav>
 
-            <section id="product-details">
-                <img id="product-img" class="cursor-pointer" alt="">
-                <div>
-                    <h1 id="product-title"></h1>
-                    <p id="product-rating"></p>
-                    <p id="product-price"></p>
-                    <p>SKU: <span id="product-sku"></span></p>
-                    <p id="product-availability"></p>
-                    <ul id="product-tags" class="flex flex-wrap gap-0.5"></ul>
+            <section id="product-details" class="grid md:grid-cols-2 gap-10">
+                <img id="product-img" class="w-full max-h-96 object-contain bg-gray-100 rounded-lg cursor-pointer" alt="">
+                <div class="flex flex-col gap-3">
+                    <h1 id="product-title" class="text-3xl font-bold"></h1>
+                    <p id="product-rating" class="text-yellow-500"></p>
+                    <p id="product-price" class="text-2xl font-semibold"></p>
+                    <p class="text-sm text-gray-500">SKU: <span id="product-sku"></span></p>
+                    <p id="product-availability" class="font-medium"></p>
+                    <ul id="product-tags" class="flex flex-wrap gap-2"></ul>
 
-                    <label for="product-quantity">Quantity</label>
-                    <input type="number" id="product-quantity" min="1" value="1">
-                    <button id="add-to-cart-button">Add to Cart</button>
-                    
-                    <p id="product-description"></p>
+                    <div class="flex items-center gap-3 mt-2">
+                        <label for="product-quantity" class="font-medium">Quantity</label>
+                        <input type="number" id="product-quantity" min="1" value="1" class="w-20 border rounded px-2 py-1">
+                        <button id="add-to-cart-button" class="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 cursor-pointer">Add to Cart</button>
+                    </div>
+
+                    <p id="product-description" class="text-gray-700 leading-relaxed mt-2"></p>
                 </div>
             </section>
 
-            <section id="product-tabs">
-                <button id="specs-tab" class="product-tab font-bold">Specifications</button>
-                <button id="reviews-tab" class="product-tab">Reviews</button>
-
-                <div id="specs-panel" class="product-panel">
-                    <p>Weight: <span id="product-weight"></span></p>
-                    <p>Dimensions: <span id="product-dimensions"></span></p>
-                    <p>Warranty: <span id="product-warranty"></span></p>
-                    <p>Shipping: <span id="product-shipping"></span></p>
-                    <p>Return Policy: <span id="product-return-policy"></span></p>
+            <section id="product-tabs" class="mt-10">
+                <div class="border-b">
+                    <button id="specs-tab" class="product-tab font-bold px-4 py-2 cursor-pointer hover:bg-gray-100">Specifications</button>
+                    <button id="reviews-tab" class="product-tab px-4 py-2 cursor-pointer hover:bg-gray-100">Reviews</button>
                 </div>
 
-                <ul id="reviews-panel" class="product-panel hidden max-h-48 overflow-y-auto"></ul>
+                <div id="specs-panel" class="product-panel p-4 flex flex-col gap-2">
+                    <p><span class="font-semibold">Weight:</span> <span id="product-weight"></span></p>
+                    <p><span class="font-semibold">Dimensions:</span> <span id="product-dimensions"></span></p>
+                    <p><span class="font-semibold">Warranty:</span> <span id="product-warranty"></span></p>
+                    <p><span class="font-semibold">Shipping:</span> <span id="product-shipping"></span></p>
+                    <p><span class="font-semibold">Return Policy:</span> <span id="product-return-policy"></span></p>
+                </div>
+
+                <ul id="reviews-panel" class="product-panel hidden max-h-64 overflow-y-auto p-4"></ul>
             </section>
 
-            <section id="related">
-                <h2>Related Products</h2>
+            <section id="related" class="mt-10">
+                <h2 class="text-2xl font-bold mb-4">Related Products</h2>
                 <ul id="related-list" class="grid grid-cols-2 md:grid-cols-5 gap-4"></ul>
             </section>
 
         </article>
 
-        <article id="cart">
-            <h1>Shopping Cart</h1>
-            <p id="cart-empty">Your cart is empty.</p>
-            <table id="cart-table">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody id="cart-items"></tbody>
-            </table>
+        <article id="cart" class="max-w-6xl mx-auto p-6">
+            <h1 class="text-3xl font-bold mb-6">Shopping Cart</h1>
 
-            <section id="shipping">
-                <h2>Shipping</h2>
-                <label for="shipping-select" class="disabled:opacity-50">Method</label>
-                <select id="shipping-select">
-                    <option value="standard">Standard</option>
-                    <option value="express">Express</option>
-                    <option value="priority">Priority</option>
-                </select>
-                
-                <label for="destination-select" class="disabled:opacity-50">Destination</label>
-                <select id="destination-select">
-                    <option value="canada">Canada</option>
-                    <option value="usa">United States</option>
-                    <option value="international">International</option>
-                </select>
-            </section>
+            <div class="grid lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-2">
+                    <p id="cart-empty" class="text-gray-500 text-center py-10">Your cart is empty.</p>
+                    <table id="cart-table" class="w-full">
+                        <thead class="border-b text-left text-sm text-gray-500">
+                            <tr>
+                                <th class="py-3 font-semibold">Item</th>
+                                <th class="py-3 font-semibold">Price</th>
+                                <th class="py-3 font-semibold">Quantity</th>
+                                <th class="py-3 font-semibold">Subtotal</th>
+                                <th class="py-3 font-semibold">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items"></tbody>
+                    </table>
+                </div>
 
-            <section id="summary">
-                <h2>Summary</h2>
-                <p>Merchandise<span id="summary-merchandise"></span></p>
-                <p>Shipping<span id="summary-shipping"></span></p>
-                <p>Tax<span id="summary-tax"></span></p>
-                <p>Total<span id="summary-total"></span></p>
-                <button id="checkout-button" class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Checkout</button>
-            </section>
+                <div class="border rounded-lg p-5 flex flex-col gap-6 h-fit">
+                    <section id="shipping" class="flex flex-col gap-3">
+                        <h2 class="text-xl font-bold">Shipping</h2>
+                        <label for="shipping-select" class="font-medium">Method</label>
+                        <select id="shipping-select" class="border rounded px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <option value="standard">Standard</option>
+                            <option value="express">Express</option>
+                            <option value="priority">Priority</option>
+                        </select>
+
+                        <label for="destination-select" class="font-medium">Destination</label>
+                        <select id="destination-select" class="border rounded px-3 py-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <option value="canada">Canada</option>
+                            <option value="usa">United States</option>
+                            <option value="international">International</option>
+                        </select>
+                    </section>
+
+                    <section id="summary" class="flex flex-col gap-2">
+                        <h2 class="text-xl font-bold mb-1">Summary</h2>
+                        <p class="flex justify-between text-gray-700">Merchandise<span id="summary-merchandise"></span></p>
+                        <p class="flex justify-between text-gray-700">Shipping<span id="summary-shipping"></span></p>
+                        <p class="flex justify-between text-gray-700">Tax<span id="summary-tax"></span></p>
+                        <p class="flex justify-between font-bold text-lg border-t pt-3 mt-1">Total<span id="summary-total"></span></p>
+                        <button id="checkout-button" class="bg-black text-white py-3 rounded-lg mt-3 hover:bg-gray-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Checkout</button>
+                    </section>
+                </div>
+            </div>
         </article>
 
     </main>
 
-    <footer>
-        <p>COMP 3612 Assignment 2</p>
-        <a href="https://github.com/apollo5479/COMP3612-Assignment2">GitHub Repo</a>
-        <p>&copy; Abdul Mohammad &amp; Paolo Deocareza</p>
+    <footer class="bg-black text-white mt-16">
+        <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between gap-6">
+            <div>
+                <p class="font-bold text-lg">COMP 3612 Assignment 2</p>
+                <p class="text-sm text-gray-400">&copy; Abdul Mohammad &amp; Paolo Deocareza</p>
+            </div>
+
+            <nav class="flex flex-wrap gap-4 text-sm text-gray-400">
+                <a href="#home" class="nav-link hover:text-white">Home</a>
+                <a href="#browse" class="nav-link hover:text-white">Browse</a>
+                <a href="#category" class="nav-link hover:text-white">Category</a>
+                <a href="#cart" class="nav-link hover:text-white">Cart</a>
+                <a href="https://github.com/apollo5479/COMP3612-Assignment2" class="hover:text-white">GitHub Repo</a>
+            </nav>
+        </div>
     </footer>
 
 
-    <dialog id="about">
-        <button id="about-x-button">X</button>
-        <h2>About</h2>
-        <p>TBD about section.</p>
-        <p>Tailwind.</p>
-        <p>Abdul Mohammad &amp; Paolo Deocareza</p>
-        <a href="https://github.com/apollo5479/COMP3612-Assignment2">GitHub Repo</a>
-        <button id="about-close-button">Close</button>
+    <dialog id="about" class="rounded-lg p-8 max-w-lg w-full">
+        <button id="about-x-button" class="absolute top-3 right-3 text-xl px-2 cursor-pointer hover:text-gray-500">X</button>
+
+        <h2 class="text-2xl font-bold mb-4">About</h2>
+
+        <div class="flex flex-col gap-4 text-gray-700">
+            <p>TBD about section.</p>
+
+            <div>
+                <h3 class="font-semibold text-black">Technologies</h3>
+                <ul class="list-disc list-inside">
+                    <li>Tailwind.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-black">Made by</h3>
+                <p>Abdul Mohammad &amp; Paolo Deocareza</p>
+            </div>
+
+            <a href="https://github.com/apollo5479/COMP3612-Assignment2" class="underline hover:text-gray-500">GitHub Repo</a>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <button id="about-close-button" class="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 cursor-pointer">Close</button>
+        </div>
     </dialog>
 
     <!-- used for opening the main img in full size from the single product view -->
-    <dialog id="image-dialog">
-        <button id="image-close-button">X</button>
-        <img id="image-dialog-img" alt="">
+    <dialog id="image-dialog" class="rounded-lg p-4">
+        <button id="image-close-button" class="float-right text-xl px-2 cursor-pointer">X</button>
+        <img id="image-dialog-img" class="max-h-[80vh] mx-auto" alt="">
     </dialog>
 
-    <div id="toast-msg" class="hidden fixed bottom-4 right-4 bg-black text-white px-4 py-2 rounded"></div>
+    <div id="toast-msg" class="hidden fixed bottom-6 right-6 z-20 bg-black text-white px-6 py-3 rounded-lg shadow-lg"></div>
 
 </body>
 </html>
