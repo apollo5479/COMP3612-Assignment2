@@ -1,6 +1,5 @@
-import { buildProductCard, toastTimedMessage } from "./helpers.js";
+import { buildProductCard, toastTimedMessage, hideContainersButOne } from "./helpers.js";
 import { loadCategories } from "./category.js";
-
 
 export function handleBrowseInit(products) {
     loadCategories(products);
@@ -161,4 +160,24 @@ function clearAllFilters(products) {
     // update the displayed filters and products
     document.querySelector("#current-filters").replaceChildren();
     applyFilters(products);
+}
+
+export function browseByCategory(products, selected_category) {
+    clearAllFilters(products);
+
+    const categories = document.querySelectorAll(
+        "#category-filters input[type='checkbox']"
+    );
+
+    for (const category of categories) {
+        if (category.value == selected_category) {
+            category.checked = true;
+            break;
+        }
+    }
+
+    applyFilters(products);
+
+    const browse = document.querySelector("#browse");
+    hideContainersButOne(browse);
 }

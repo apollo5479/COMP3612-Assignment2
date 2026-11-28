@@ -3,6 +3,8 @@ import { handleBrowseInit } from "./browse.js";
 import { displaySingleProduct, initSingleProductView } from "./product.js";
 import { addToCart, initCart } from "./cart.js";
 import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
+import { handleCategoryInit } from "./category.js";
+import { handleHomeInit } from "./home.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const products = getProducts();
@@ -11,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     openHomePage();
     handleBrowseInit(products);
+    handleCategoryInit(products);
+    handleHomeInit(products);
     handleNavigation();
     handleAboutDialog();
     initSingleProductView();
@@ -18,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCart();
 
     // temp: only for testing until we have product cards on Home
-    openSingleProduct(products[67]);
+    //openSingleProduct(products[67]);
 
 });
 
