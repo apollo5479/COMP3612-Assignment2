@@ -53,6 +53,10 @@ function handleAboutDialog() {
         aboutDialog.showModal();
     });
 
+    document.querySelector("#about-x-button").addEventListener("click", () => {
+        aboutDialog.close();
+    });
+
     document.querySelector("#about-close-button").addEventListener("click", () => {
         aboutDialog.close();
     });

@@ -45,7 +45,8 @@ export function buildProductCard(product) {
 
     const title = addTextElement(card, "h3", product.title);
     title.classList.add("product-link", "cursor-pointer", "font-bold");
-
+    
+    addTextElement(card, "p", `${ratingToStars(product.rating)} ${product.rating.toFixed(1)}`);
     addTextElement(card, "p", formatPrice(product.price));
 
     const button = addTextElement(card, "button", "Add to Cart");
