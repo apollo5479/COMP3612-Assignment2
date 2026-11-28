@@ -84,7 +84,7 @@ function displayReviews(reviews) {
         addTextElement(item, "p", ratingToStars(review.rating));
 
         const date = addTextElement(item, "p", formatDate(review.date));
-        date.classList.add("text-sm", "font-bold") // TODO: styling
+        date.classList.add("text-sm", "text-gray-500") // TODO: styling
 
         addTextElement(item, "p", review.comment);
         reviewList.appendChild(item);

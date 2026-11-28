@@ -139,12 +139,16 @@ function displayCart() {
 function buildCartRow(item) {
     const row = document.createElement("tr");
     row.dataset.id = item.id;           // with this the quantity and remove controls know which item it is
+    row.classList.add("border-b");
 
     row.appendChild(buildItemCell(item));
-    addTextElement(row, "td", formatPrice(item.price));
+    const price = addTextElement(row, "td", formatPrice(item.price));
+    price.classList.add("py-4");
 
     row.appendChild(buildQuantityCell(item));
-    addTextElement(row, "td", formatPrice(item.price * item.quantity));     // subtotal
+
+    const subtotal = addTextElement(row, "td", formatPrice(item.price * item.quantity));
+    subtotal.classList.add("py-4", "font-semibold");
 
     row.appendChild(buildRemoveCell());
 
@@ -154,24 +158,34 @@ function buildCartRow(item) {
 // the item column: builds the title and thumbnail
 function buildItemCell(item) {
     const cell = document.createElement("td");
+    cell.classList.add("py-4");
+
+    const div = document.createElement("div");
+    div.classList.add("flex", "items-center", "gap-3");
+
     const thumbnail = document.createElement("img");
     thumbnail.src = item.thumbnail;
     thumbnail.alt = item.title;
-    thumbnail.classList.add("w-16");
+    thumbnail.classList.add("w-16", "h-16", "object-contain", "bg-gray-100", "rounded");
     cell.appendChild(thumbnail);
 
-    addTextElement(cell, "span", item.title);
+    const title = addTextElement(cell, "span", item.title);
+    title.classList.add("font-medium");
+
+    cell.appendChild(div);
     return cell;
 }
 
 // the quantuty column
 function buildQuantityCell(item) {
     const cell = document.createElement("td");
+    cell.classList.add("py-4");
+
     const quantityInput = document.createElement("input");
     quantityInput.type = "number";
     quantityInput.min = 1;
     quantityInput.value = item.quantity;
-    quantityInput.classList.add("cart-quantity", "w-16", "border");
+    quantityInput.classList.add("cart-quantity", "w-20", "border", "rounded", "px-2", "py-1");
     cell.appendChild(quantityInput);
 
     return cell;
@@ -180,8 +194,9 @@ function buildQuantityCell(item) {
 // the remove column
 function buildRemoveCell() {
     const cell = document.createElement("td");
+    cell.classList.add("py-4");
     const button = addTextElement(cell, "button", "X");
-    button.classList.add("cart-remove", "cursor-pointer");
+    button.classList.add("cart-remove", "cursor-pointer", "text-xl", "px-2", "text-gray-500", "hover:text-black");
     return cell;
 }
 
