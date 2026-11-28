@@ -1,4 +1,5 @@
 import { getProducts } from "./data.js";
+import { handleBrowseInit } from "./browse.js";
 import { displaySingleProduct, initSingleProductView } from "./product.js";
 import { addToCart, initCart } from "./cart.js";
 import { toastTimedMessage, hideContainersButOne } from "./helpers.js";
@@ -9,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(products);
 
     openHomePage();
+    handleBrowseInit(products);
     handleNavigation();
     handleAboutDialog();
     initSingleProductView();

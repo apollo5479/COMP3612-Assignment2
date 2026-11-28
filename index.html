@@ -49,8 +49,40 @@
             <h1>Browse</h1>
             <section id="filter">
                 <h2>Filters</h2>
+                <label for="name-filter">Product Name</label>
+                <input type="search" id="name-filter"
+                    placeholder="Search products...">
 
+                <label for="price-filter">Price</label>
+                <input type="number" id="price-filter" min="0">
+                <label for="over-under">Over or Under</label>
+                <select id="over-under">
+                    <option value="over">Over</option>
+                    <option value="under">Under</option>
+                </select>
+
+                <h3>Categories</h3>
+                <div id="category-filters"></div>
+
+                <label for="rating-filter">Minimum Rating</label>
+                <select id="rating-filter">
+                    <option value="0">Any Rating</option>
+                    <option value="1">1 Star and Above</option>
+                    <option value="2">2 Stars and Above</option>
+                    <option value="3">3 Stars and Above</option>
+                    <option value="4">4 Stars and Above</option>
+                    <option value="5">5 Stars</option>
+                </select>
+
+                <button type="button" id="apply-filters">
+                    Apply Filters
+                </button>
+
+                <button type="button" id="clear-filters">
+                    Clear All Filters
+                </button>
             </section>
+
             <section id="results">
                 <div id="current-filters"></div>
                 <label for="sort-select">Sort</label>

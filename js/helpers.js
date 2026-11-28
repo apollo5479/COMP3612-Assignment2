@@ -1,3 +1,5 @@
+import { displaySingleProduct } from "./product.js";
+
 export function toastTimedMessage(message) {
     const toast = document.querySelector("#toast-msg");
     toast.textContent = message;
